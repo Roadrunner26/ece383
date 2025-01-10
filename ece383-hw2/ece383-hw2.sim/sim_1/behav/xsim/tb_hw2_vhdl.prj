@@ -1,0 +1,7 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../ece383-hw2.srcs/sources_1/new/hw2.vhd" \
+"../../../../ece383-hw2.srcs/sim_1/new/hw2sim.vhd" \
+
+# Do not sort compile order
+nosort
