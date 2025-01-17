@@ -107,7 +107,8 @@ set rc [catch {
   set_param chipscope.maxJobs 2
   set_param runs.launchOptions { -jobs 4  }
 OPTRACE "create in-memory project" START { }
-  create_project -in_memory -part xc7a12ticsg325-1L
+  create_project -in_memory -part xc7a200tsbg484-1
+  set_property board_part digilentinc.com:nexys_video:part0:1.2 [current_project]
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
@@ -126,7 +127,7 @@ OPTRACE "read constraints: implementation_pre" START { }
 OPTRACE "read constraints: implementation_pre" END { }
 OPTRACE "add files" END { }
 OPTRACE "link_design" START { }
-  link_design -top top -part xc7a12ticsg325-1L 
+  link_design -top top -part xc7a200tsbg484-1 
 OPTRACE "link_design" END { }
 OPTRACE "gray box cells" START { }
 OPTRACE "gray box cells" END { }

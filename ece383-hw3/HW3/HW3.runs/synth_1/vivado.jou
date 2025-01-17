@@ -3,8 +3,8 @@
 # SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
 # IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
 # SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
-# Start of session at: Tue Jan 14 22:34:05 2025
-# Process ID         : 12684
+# Start of session at: Wed Jan 15 13:04:54 2025
+# Process ID         : 27520
 # Current directory  : C:/Users/Grantham.Zimmerman/Desktop/ece383/ece383-hw3/HW3/HW3.runs/synth_1
 # Command line       : vivado.exe -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
 # Log file           : C:/Users/Grantham.Zimmerman/Desktop/ece383/ece383-hw3/HW3/HW3.runs/synth_1/top.vds
@@ -17,8 +17,8 @@
 # CPU Physical cores : 4
 # CPU Logical cores  : 8
 # Host memory        : 16425 MB
-# Swap memory        : 5643 MB
-# Total Virtual      : 22068 MB
-# Available Virtual  : 4386 MB
+# Swap memory        : 5846 MB
+# Total Virtual      : 22272 MB
+# Available Virtual  : 3251 MB
 #-----------------------------------------------------------
 source top.tcl -notrace

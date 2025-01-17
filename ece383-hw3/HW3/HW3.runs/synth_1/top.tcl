@@ -56,9 +56,8 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 2
 OPTRACE "Creating in-memory project" START { }
-create_project -in_memory -part xc7a12ticsg325-1L
+create_project -in_memory -part xc7a200tsbg484-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
@@ -67,6 +66,7 @@ set_property webtalk.parent_dir C:/Users/Grantham.Zimmerman/Desktop/ece383/ece38
 set_property parent.project_path C:/Users/Grantham.Zimmerman/Desktop/ece383/ece383-hw3/HW3/HW3.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
+set_property board_part digilentinc.com:nexys_video:part0:1.2 [current_project]
 set_property ip_output_repo c:/Users/Grantham.Zimmerman/Desktop/ece383/ece383-hw3/HW3/HW3.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
@@ -90,7 +90,7 @@ read_checkpoint -auto_incremental -incremental C:/Users/Grantham.Zimmerman/Deskt
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
-synth_design -top top -part xc7a12ticsg325-1L
+synth_design -top top -part xc7a200tsbg484-1
 OPTRACE "synth_design" END { }
 if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
  send_msg_id runtcl-6 info "Synthesis results are not added to the cache due to CRITICAL_WARNING"
