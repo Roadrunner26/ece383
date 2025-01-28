@@ -56,6 +56,7 @@ architecture vga_arch of VGA is
     signal ctrl : std_logic := '1';
     signal w_Q : unsigned(9 downto 0);
     signal w_row, w_column : unsigned (9 downto 0);
+    signal w_h_blank, w_v_blank : std_logic;
 component counter is
     generic (pixel_width : integer);
     port(
@@ -79,10 +80,21 @@ component scopeFace is
 		   ch2_enb: in std_logic);
 end component scopeFace;
 
+component synchronize is
+port(
+    clk : in std_logic;
+    reset_n : in std_logic;
+    row : in unsigned(9 downto 0);
+    column : in unsigned(9 downto 0);
+    v_blank : out std_logic;
+    h_blank : out std_logic;
+    v_sync : out std_logic;
+    h_sync : out std_logic);
+end component synchronize; 
 begin
 
 uut1 : counter
-generic map (pixel_width => 800)
+generic map (pixel_width => 896)
 port map(
     clk => clk,
     reset => reset_n,
@@ -91,7 +103,7 @@ port map(
 );
 
 uut2 : counter
-generic map (pixel_width => 525)
+generic map (pixel_width => 527)
 port map(
     clk => clk,
     reset => reset_n,
@@ -113,10 +125,23 @@ port map(
      g => g,
      b => b
 );
+
+uut4 : synchronize
+port map(
+    clk => clk,
+    h_sync => h_sync,
+    v_sync => v_sync,
+    column => w_Q,
+    row => w_row,
+    reset_n => reset_n,
+    h_blank => w_h_blank,
+    v_blank => w_v_blank
+);
+   
     process(clk)
     begin
         if (rising_edge(clk)) then
-            if(w_Q = 799) and (ctrl = '1') then
+            if(w_Q = 895) and (ctrl = '1') then
                 w_ctrl <= '1';
             else w_ctrl <= '0';
             end if;
@@ -125,6 +150,6 @@ port map(
     w_column <= w_Q;
     row <= w_row;
     column <= w_column;
-
+    blank <= w_v_blank or w_h_blank;
 
 end vga_arch;
