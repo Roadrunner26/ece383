@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Wed Jan 29 11:35:23 2025
+| Date         : Wed Jan 29 15:19:50 2025
 | Host         : C26-5CG2151LB4 running 64-bit major release  (build 9200)
 | Command      : report_drc -file lab1_drc_opted.rpt -pb lab1_drc_opted.pb -rpx lab1_drc_opted.rpx
 | Design       : lab1
@@ -49,7 +49,7 @@ Related violations: <none>
 
 IOSR-1#1 Warning
 IOB set reset sharing  
-IO reset_n connects to flops which have these video_inst/Inst_vga/uut1/processQ_reg[7]_1
+IO reset_n connects to flops which have these video_inst/Inst_vga/uut1/processQ_reg[7]_10
 video_inst/Inst_vga/uut2/processQ_reg[5]_0 set/reset signals.  For optimal IOB flop packing there should be only one set/reset signal coming into the IOB.
 Related violations: <none>
 

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Wed Jan 29 11:36:39 2025
+| Date         : Wed Jan 29 15:21:02 2025
 | Host         : C26-5CG2151LB4 running 64-bit major release  (build 9200)
 | Command      : report_drc -file lab1_drc_routed.rpt -pb lab1_drc_routed.pb -rpx lab1_drc_routed.rpx
 | Design       : lab1
@@ -24,12 +24,13 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max checks: <unlimited>
-             Checks found: 2
+             Checks found: 3
 +----------+----------+-----------------------------------------------------+--------+
 | Rule     | Severity | Description                                         | Checks |
 +----------+----------+-----------------------------------------------------+--------+
 | CFGBVS-1 | Warning  | Missing CFGBVS and CONFIG_VOLTAGE Design Properties | 1      |
 | IOSR-1   | Warning  | IOB set reset sharing                               | 1      |
+| PDRC-134 | Warning  | SLICE_PairEqSame_B6B5_WARN                          | 1      |
 +----------+----------+-----------------------------------------------------+--------+
 
 2. REPORT DETAILS
@@ -49,8 +50,13 @@ Related violations: <none>
 
 IOSR-1#1 Warning
 IOB set reset sharing  
-IO reset_n connects to flops which have these video_inst/Inst_vga/uut1/processQ_reg[7]_1
+IO reset_n connects to flops which have these video_inst/Inst_vga/uut1/processQ_reg[7]_10
 video_inst/Inst_vga/uut2/processQ_reg[5]_0 set/reset signals.  For optimal IOB flop packing there should be only one set/reset signal coming into the IOB.
+Related violations: <none>
+
+PDRC-134#1 Warning
+SLICE_PairEqSame_B6B5_WARN  
+Luts B6LUT and B5LUT in use in site SLICE_X155Y126 with different equations without A6 pin connected to Global Logic High.
 Related violations: <none>
 
 
