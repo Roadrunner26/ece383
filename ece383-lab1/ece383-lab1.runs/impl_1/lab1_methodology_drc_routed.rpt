@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Mon Jan 27 21:58:44 2025
+| Date         : Wed Jan 29 11:36:42 2025
 | Host         : C26-5CG2151LB4 running 64-bit major release  (build 9200)
 | Command      : report_methodology -file lab1_methodology_drc_routed.rpt -pb lab1_methodology_drc_routed.pb -rpx lab1_methodology_drc_routed.rpx
 | Design       : lab1
@@ -23,15 +23,38 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max checks: <unlimited>
-             Checks found: 1
-+--------+----------+---------------------------------------------------+--------+
-| Rule   | Severity | Description                                       | Checks |
-+--------+----------+---------------------------------------------------+--------+
-| XDCC-2 | Warning  | Scoped Non-Timing constraint/property overwritten | 1      |
-+--------+----------+---------------------------------------------------+--------+
+             Checks found: 5
++-----------+------------------+------------------------------------------------------------------+--------+
+| Rule      | Severity         | Description                                                      | Checks |
++-----------+------------------+------------------------------------------------------------------+--------+
+| TIMING-17 | Critical Warning | Non-clocked sequential cell                                      | 2      |
+| TIMING-27 | Critical Warning | Invalid primary clock on hierarchical pin                        | 1      |
+| CKLD-2    | Warning          | Clock Net has IO Driver, not a Clock Buf, and/or non-Clock loads | 1      |
+| XDCC-2    | Warning          | Scoped Non-Timing constraint/property overwritten                | 1      |
++-----------+------------------+------------------------------------------------------------------+--------+
 
 2. REPORT DETAILS
 -----------------
+TIMING-17#1 Critical Warning
+Non-clocked sequential cell  
+The clock pin ch1_wave_reg/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-17#2 Critical Warning
+Non-clocked sequential cell  
+The clock pin ch2_wave_reg/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-27#1 Critical Warning
+Invalid primary clock on hierarchical pin  
+A primary clock video_inst/mmcm_adv_inst_display_clocks/inst/clk_in1 is created on an inappropriate internal pin video_inst/mmcm_adv_inst_display_clocks/inst/clk_in1. It is not recommended to create a primary clock on a hierarchical pin when its driver pin has a fanout connected to multiple clock pins
+Related violations: <none>
+
+CKLD-2#1 Warning
+Clock Net has IO Driver, not a Clock Buf, and/or non-Clock loads  
+Clock net clk_IBUF is directly driven by an IO rather than a Clock Buffer or may be an IO driving a mix of Clock Buffer and non-Clock loads. This connectivity should be reviewed and corrected as appropriate. Driver(s): ch1_wave_reg/C, ch2_wave_reg/C, clk_IBUF_inst/O, video_inst/clk
+Related violations: <none>
+
 XDCC-2#1 Warning
 Scoped Non-Timing constraint/property overwritten  
 A new XDC property IOSTANDARD on reset_n overrides a previous scoped property. It is not recommended to override a scoped (typically an IP) property and could result in unexpected behaviours.

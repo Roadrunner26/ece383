@@ -17,7 +17,9 @@ end lab1;
 
 architecture structure of lab1 is
 
-	signal trigger_time, trigger_volt, row, column: unsigned(9 downto 0);
+    signal trigger_time : unsigned(9 downto 0) := "0011101110";
+    signal trigger_volt : unsigned(9 downto 0) := "0011111111";
+	signal row, column: unsigned(9 downto 0);
 	signal old_button, button_activity: std_logic_vector(4 downto 0);
 	signal ch1_wave, ch2_wave: std_logic;
 	
@@ -37,7 +39,34 @@ architecture structure of lab1 is
 	end component;
 
 begin
-
+    process(clk)
+    begin
+        if(rising_edge(clk)) then
+            if(switch(0) = '1') then
+                if(row = column) then
+                    ch1_wave <= '1';
+                else ch1_wave <= '0';
+                end if;            
+            else
+                ch1_wave <= '0';
+            end if;
+        end if;
+    end process;
+    
+    process(clk)
+    begin
+        if(rising_edge(clk)) then
+            if(switch(1) = '1') then
+                if(row = 440 - column) then
+                    ch2_wave <= '1';
+                else ch2_wave <= '0';
+                end if;            
+            else
+                ch2_wave <= '0';
+            end if;
+        end if;
+    end process;
+    
 
 	------------------------------------------------------------------------------
 	-- the variable button_activity will contain a '1' in any position which 
