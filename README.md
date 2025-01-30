@@ -3,21 +3,69 @@ We programmed functionality for triggers, 2 channel waves, and a voltage time gr
 
 Design/Implementation - Include your diagrams from HW5. Provide the block-diagram of your solution using the signal names in your code. The block diagram given above is somewhat incomplete, 
 make sure to include corrections to this diagram. An editable block diagram PPT is provided here. For each module that you built, explain its overall purpose, inputs, outputs, and behavior. 
-You do not need to include code in this report (instead put all your vhdl files (code and testbench), wcfg file, and bit files in GitHub). Tip: How to add images to your README
+You do not need to include code in this report (instead put all your vhdl files (code and testbench), wcfg file, and bit files in GitHub).
+
+Entity: Lab1
+Purpose: Top level entity for receiving inputs from switches and buttons to turn on and off channels.
+Inputs: btn, clk, reset_n, sw(1 downto 0)
+Outputs: tmds, tmdsp
+Behavior: When a button is toggled, the triggers move, when switches are toggled, channels turn on and off.
+
+Component: Video
+Purpose: Provides channeels and trigger volts for for VGA, DVID, mid level component
+Inputs: clk, reset_n, tr_volt, tr_trigger, ch1, ch2, ch1_enb, ch2_enb
+Outputs: tmds, tmdsp
+Behavior: Passes values to lower level components.
+
+Component: Clock_Wiz_0
+Purpose: Counts for DVID and VGA
+Inputs: clk, reset_n
+Ouptuts: clk_out_1, clk_out_2, clk_out_3
+Behavior: resets when reset is hit, counts otherwise.
+
+Component: VGA
+Purpose: Contains counter and scopeface, passes trigger volt and time to scopeface, creates monitor screen.
+Inputs: pixel_clk, reset_n, tr_volt, tr_time, ch1, ch2, ch1_enb, ch2_enb
+Outputs: R, G, B, blank, v_sync, h_sync
+Behavior: Counts and has 4 stages, active video, front porch, sync, and back porch, draws to monitor.
+
+Component: DVID
+Purpose: Converts VHDL to HDMI for colors.
+Inputs: R, G, B, blank, v_sync, h_sync, blank, serialize_clk, serialize_clk_n
+Outputs: R, G, B
+Behavior: Input VHDL color to output HDMI colors.
+
+Component: ScopeFace
+Purpsoe: Draws onto the monitor
+Inputs: tr_volt, tr_time, row, column,  ch1, ch2, ch1_enb, ch2_enb
+Outputs: R, G, B
+Behavior: Draws grid lines automatically, draws ch1 and ch2 signals onto the HDMI monitor.
+
+
+![Image](https://github.com/user-attachments/assets/5591fad9-029d-43fa-9532-9e7b675c428c)
+![Image](https://github.com/user-attachments/assets/54721e84-c82a-4bcf-9ad1-3369b5819e51)
 
 Test/Debug - Briefly describe the methods used to verify system functionality (such as products from gate check 1 and 2).
 Through using gatecheck 1, 2, required functionality, and A functionality, students were able to demonstrate that the lab worked correctly. In gatecheck 1, students used
 screenshots of waveforms to show that the counters were working correctly. In gatecheck 2, students showed successful implementation of the 
 Show at least three excerpts from your testbench for the VGA module (as screen shots):
+![Screenshot 2025-01-29 202842](https://github.com/user-attachments/assets/784e128d-5cdc-462a-a189-1bc0d8143367)
+![Screenshot 2025-01-29 202850](https://github.com/user-attachments/assets/c2dbf7ad-eef8-4c2b-a351-89d018e03088)
+![Screenshot 2025-01-29 202904](https://github.com/user-attachments/assets/920e57e0-da30-484b-b09f-4af8b9a89f23)
 
 Show the h_synch going high, low, and high in relation to column count.
-
+![Image](https://github.com/user-attachments/assets/91f400db-465e-4d2c-9569-d1d0b6379cf8)
+![Image](https://github.com/user-attachments/assets/30f4aab0-1188-4a70-a688-641cb3f61a43)
 Show the v_synch going high, low, and high in relation to row count AND column count.
-
+![Image](https://github.com/user-attachments/assets/b8dfa149-3a41-424b-a9b0-265694593aab)
+![Screenshot 2025-01-29 201410](https://github.com/user-attachments/assets/4e781ee3-b378-4d66-8b46-f5c224ae120d)
 Show the blank signals going high, low, and high in relation to column count and row count.
+![Image](https://github.com/user-attachments/assets/011688ee-3d4b-4579-bd6e-e7576b3879c4)
+![Image](https://github.com/user-attachments/assets/2ac651ca-aa9a-4f82-9cd3-7ce5856074ce)
 
 Show the column count rolling over causing the row count to increment and max counts for both counters.
-
+![Captura de pantalla 2025-01-25 185056](https://github.com/user-attachments/assets/371c2813-8506-4cc6-90d4-7bd89eb112de)
+![Captura de pantalla 2025-01-25 185309](https://github.com/user-attachments/assets/1790d3ab-b836-414b-a539-e9114f424650)
 List the major problems you encountered and how you fixed them. This should cover all the problems you encountered in the lab and how you fixed them. Break each problem and solution into separate paragraphs.
 
 Counter Roll bit was not incrementing correctly when initially simulating: I encountered many issues through attempting to simulate the counter the first time. Eventually I realized I had to make several different wires
