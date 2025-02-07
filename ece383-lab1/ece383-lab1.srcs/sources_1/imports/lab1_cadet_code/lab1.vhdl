@@ -16,7 +16,7 @@ entity lab1 is
 end lab1;
 
 architecture structure of lab1 is
-
+    constant column_start : unsigned(9 downto 0) := x"1B8";
     signal trigger_time : unsigned(9 downto 0) := "0011101110";
     signal trigger_volt : unsigned(9 downto 0) := "0011111111";
 	signal row, column: unsigned(9 downto 0);
@@ -61,7 +61,7 @@ begin
     begin
         if(rising_edge(clk)) then
             if(switch(1) = '1') then
-                if(row = 440 - column) then
+                if(row = column_start - column) then
                     ch2_wave <= '1';
                 else ch2_wave <= '0';
                 end if;            
