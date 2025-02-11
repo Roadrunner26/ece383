@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="hw8b_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="hw8b_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="52.581120 us"></ZoomStartTime>
+      <ZoomEndTime time="60.761121 us"></ZoomEndTime>
+      <Cursor1Time time="64.581120 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="117"></NameColumnWidth>
+      <ValueColumnWidth column_width="90"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="14" />
+   <wvobject fp_name="/hw8b_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/cw_sig" type="array">
+      <obj_property name="ElementShortName">cw_sig[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cw_sig[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/sw_sig" type="logic">
+      <obj_property name="ElementShortName">sw_sig</obj_property>
+      <obj_property name="ObjectShortName">sw_sig</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/Ready_sig" type="logic">
+      <obj_property name="ElementShortName">Ready_sig</obj_property>
+      <obj_property name="ObjectShortName">Ready_sig</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/Ready_clk" type="logic">
+      <obj_property name="ElementShortName">Ready_clk</obj_property>
+      <obj_property name="ObjectShortName">Ready_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/data_in_sig" type="array">
+      <obj_property name="ElementShortName">data_in_sig[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in_sig[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/data_out_sig" type="array">
+      <obj_property name="ElementShortName">data_out_sig[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out_sig[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/clk_period" type="other">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/ready_clk_period" type="other">
+      <obj_property name="ElementShortName">ready_clk_period</obj_property>
+      <obj_property name="ObjectShortName">ready_clk_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/uut_dp/i_sig" type="array">
+      <obj_property name="ElementShortName">i_sig[9:0]</obj_property>
+      <obj_property name="ObjectShortName">i_sig[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/uut_dp/DI_Sig" type="array">
+      <obj_property name="ElementShortName">DI_Sig[15:0]</obj_property>
+      <obj_property name="ObjectShortName">DI_Sig[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/uut_dp/DO_Sig" type="array">
+      <obj_property name="ElementShortName">DO_Sig[15:0]</obj_property>
+      <obj_property name="ObjectShortName">DO_Sig[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/hw8b_tb/uut_cu/state" type="other">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+</wave_config>
