@@ -195,7 +195,6 @@ begin
    
 	
 -- Need logic for the FLAG register
-	-- SOMETHING_GOES_HERE
 	fg : FlagRegister
     port map(
         Q => Q,
@@ -242,6 +241,7 @@ begin
             end if;
         end if;
     end process;
+    
 
 	CntrMux : WrAddrMux
 	   port map(
@@ -273,7 +273,7 @@ begin
     ENBMUX : wrEnbMux
         port map(
             clk => clk,
-            cw => cw(0),
+            cw => cw(2),
             exSel => exSel,
             exWen => exWen,
             result => w_wrEnbMux

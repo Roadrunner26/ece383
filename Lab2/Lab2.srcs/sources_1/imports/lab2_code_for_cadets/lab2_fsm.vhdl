@@ -27,12 +27,13 @@ entity lab2_fsm is
 end lab2_fsm;
 
 architecture Behavioral of lab2_fsm is
+    signal ready : std_logic;
 
-	type state_type is NEED_SOMETHING_HERE;
+	type state_type is (compare, reset, wait_ready, incr);
 	signal state: state_type;
 
 begin
-
+    ready <= sw(0);
 	-------------------------------------------------------------------------------
 	--		SW		meaning
 	--		
@@ -41,10 +42,25 @@ begin
 	begin
 		if (rising_edge(clk)) then
 			if (reset_n = '0') then 
-				state <= NEED_SOMETHING_HERE;
+				state <= reset;
 			else 
 				case state is
-					when NEED_SOMETHING_HERE
+					when reset => 
+					   state <= wait_ready;
+				    when wait_ready =>
+				        if(ready = '1') then
+				            state <= incr;
+				        end if;
+				   when incr =>
+				        state <= compare;
+				   when compare =>
+				        if(sw(1) = '1') then
+				            state <= reset;
+				        else
+				            if(ready = '0') then
+				                state <= wait_ready;
+				            end if;
+				        end if;
 				end case;
 			end if;
 		end if;
@@ -55,8 +71,11 @@ begin
 	--		CW		meaning
 	--		
 	-------------------------------------------------------------------------------
-	
-	-- NEED_SOMETHING_HERE
-
+       cw(1 downto 0) <= "11" when state = reset else
+       "01" when state <= incr else
+       "00";
+       
+       cw(2) <= '1' when state = incr else
+       '0';
 end Behavioral;
 

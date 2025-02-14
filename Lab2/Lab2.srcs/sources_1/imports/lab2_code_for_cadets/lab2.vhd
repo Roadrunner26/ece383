@@ -49,12 +49,12 @@ component lab2_datapath is
     flagClear: in std_logic); 
 end component;
 	
---component lab2_fsm is
---    Port ( clk : in  STD_LOGIC;
---           reset_n : in  STD_LOGIC;
---           sw : in  STD_LOGIC_VECTOR (2 downto 0);
---           cw : out  STD_LOGIC_VECTOR (2 downto 0));
---end component;
+component lab2_fsm is
+    Port ( clk : in  STD_LOGIC;
+           reset_n : in  STD_LOGIC;
+           sw : in  STD_LOGIC_VECTOR (2 downto 0);
+           cw : out  STD_LOGIC_VECTOR (2 downto 0));
+end component;
 begin
 
 
@@ -86,10 +86,10 @@ begin
 		flagClear => '0');
 		
 			  
---	control: lab2_fsm port map( 
---		clk => clk,
---		reset_n => reset_n,
---		sw => sw,
---		cw => cw);
+	control: lab2_fsm port map( 
+		clk => clk,
+		reset_n => reset_n,
+		sw => sw,
+		cw => cw);
 
 end behavior;
