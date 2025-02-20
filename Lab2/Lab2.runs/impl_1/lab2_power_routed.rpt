@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date             : Fri Feb 14 10:33:17 2025
+| Date             : Wed Feb 19 20:53:28 2025
 | Host             : C26-5CG2151LB4 running 64-bit major release  (build 9200)
 | Command          : report_power -file lab2_power_routed.rpt -pb lab2_power_summary_routed.pb -rpx lab2_power_routed.rpx
 | Design           : lab2
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.517        |
+| Total On-Chip Power (W)  | 0.520        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.376        |
+| Dynamic (W)              | 0.379        |
 | Device Static (W)        | 0.140        |
 | Effective TJA (C/W)      | 3.3          |
 | Max Ambient (C)          | 83.3         |
@@ -53,17 +53,17 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.006 |       10 |       --- |             --- |
-| Slice Logic    |     0.002 |     1263 |       --- |             --- |
-|   LUT as Logic |     0.002 |      630 |    133800 |            0.47 |
-|   CARRY4       |    <0.001 |       86 |     33450 |            0.26 |
-|   Register     |    <0.001 |      325 |    267600 |            0.12 |
-|   Others       |     0.000 |       49 |       --- |             --- |
-| Signals        |     0.002 |      827 |       --- |             --- |
+| Slice Logic    |     0.002 |     1479 |       --- |             --- |
+|   LUT as Logic |     0.002 |      686 |    133800 |            0.51 |
+|   CARRY4       |    <0.001 |       83 |     33450 |            0.25 |
+|   Register     |    <0.001 |      452 |    267600 |            0.17 |
+|   Others       |     0.000 |       52 |       --- |             --- |
+| Signals        |     0.002 |      961 |       --- |             --- |
 | Block RAM      |     0.003 |        2 |       365 |            0.55 |
 | MMCM           |     0.228 |        2 |        10 |           20.00 |
-| I/O            |     0.135 |       21 |       285 |            7.37 |
+| I/O            |     0.138 |       23 |       285 |            8.07 |
 | Static Power   |     0.140 |          |           |                 |
-| Total          |     0.517 |          |           |                 |
+| Total          |     0.520 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -148,13 +148,15 @@ Table of Contents
 +------------------------------------+-----------+
 | Name                               | Power (W) |
 +------------------------------------+-----------+
-| lab2                               |     0.376 |
+| lab2                               |     0.379 |
 |   datapath                         |     0.374 |
 |     Audio_Codec                    |     0.125 |
+|       audio_inout                  |     0.001 |
 |       audiocodec_master_clock      |     0.123 |
+|       initialize_audio             |     0.001 |
 |     leftChannelMemory              |     0.001 |
 |     rightChannelMemory             |     0.001 |
-|     video_inst                     |     0.244 |
+|     video_inst                     |     0.243 |
 |       Inst_vga                     |     0.002 |
 |       inst_dvid                    |     0.001 |
 |       mmcm_adv_inst_display_clocks |     0.107 |

@@ -1,0 +1,10 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/new/VGA.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'VGA'
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/new/counter1.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'counter'
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/lab1_cadet_code/scopeface.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'scopeFace'
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/new/synchronize.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'synchronize'
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sim_1/imports/lab1_cadet_code/vga_tb.vhdl" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'lab1_tb'

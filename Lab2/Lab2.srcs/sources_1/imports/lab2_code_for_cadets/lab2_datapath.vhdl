@@ -54,15 +54,15 @@ architecture Behavioral of lab2_datapath is
 
     signal sim_live: std_logic;
     signal ready : std_logic;
-	signal L_bus_in, R_bus_in, L_bus_out, R_bus_out: std_logic_vector(17 downto 0);	    
-    signal triggerVolt, triggerTime, writeCntr: unsigned (9 downto 0);
+	signal toADCL, toADCR, fromADCL, fromADCR: std_logic_vector(17 downto 0);	    
+    signal triggerVolt, triggerTime : unsigned (15 downto 0);
+    signal writeCntr : unsigned (9 downto 0);
     signal row, column: unsigned(9 downto 0);
     signal ch1, ch2, reset: std_logic;
     signal readL, readR : std_logic_vector(15 downto 0);
-    signal Q, D, G, L : std_logic;
+    signal QL, QR, Q, G, L : std_logic;
     signal tr_volt, tr_time : std_logic;
     signal ctrl : std_logic;
-    signal sw_sig : std_logic_vector(2 downto 0);
     signal w_wrEnbMux : std_logic;
     signal w_WrAddrMux : std_logic_vector(9 downto 0);
     signal w_DinMuxL, w_DinMuxR : std_logic_vector(15 downto 0);
@@ -71,6 +71,9 @@ architecture Behavioral of lab2_datapath is
 	signal btn_right_pressed : std_logic := '0';
 	signal btn_left_pressed : std_logic := '0';
 	signal w_D0WasteL, w_D0WasteR : std_logic_vector(5 downto 0);
+	signal w_unsignedDIL, w_unsignedDIR : unsigned(15 downto 0);
+	signal w_Lbus_out, w_Rbus_out : std_logic_vector(15 downto 0);
+	signal w_compareGL, w_compareGR, w_compareLL, w_compareLR : std_logic;
 
     constant offset : unsigned(9 downto 0) := to_unsigned(92, 10);
     
@@ -106,10 +109,6 @@ component wrEnbMux is
         result : out std_logic
     );
 end component;
-
-    
-    
-    
 	
 component video is
     Port ( clk : in  STD_LOGIC;
@@ -155,42 +154,23 @@ component FlagRegister is
     );
 end component;
 
+component lec10 is
+	generic (N: integer);
+	Port(	clk: in  STD_LOGIC;
+			reset : in  STD_LOGIC;
+			crtl: in std_logic_vector(1 downto 0);
+			D: in unsigned (N-1 downto 0);
+			Q: out unsigned (N-1 downto 0));
+end component;
+
 
 begin
-
--- Here are some Tests, progressively replacing the comparator in the block diagram between BRAM and Video
--- TEST 1:  draw a horizontal yellow line (ch1) just above the center grid line (DC or zero volts)
---          and a horizontal green line (ch2) just below the center grid line
---          Disconnect or comment out BRAM code at the bottom of the file
-	--ch1 <= '1' when (218 = row) else '0';		
-    --ch2 <= '1' when (222 = row) else '0';       
-
--- TEST 2: This is a good test to calibrate your DC offcet, attempting to center the waveform on the center grid line
---    If grabbing  9-bit samples from BRAM:   offset = 256 - 220 = ______
---    If grabbing 10-bit samples from BRAM:   offset = 512 - 220 = ______
---          Disconnect or comment out BRAM code at the bottom of the file
---    syntax might need work... vectors must be the proper size
-    -- for 10-bit unsigned, "1000000000" in the center number between "0000000000" and "1111111111"
-	--ch1 <= '1' when (row = offset + "1000000000" or row = offset - "1000000000") else '0';
-	--ch2 <= '1' when (row = offset + "1000000000" or row = offset - "1000000000") else '0';		
-	-- If you do find the correct offset, your green and yellow line with draw on top of the center white grid line
-	
 -- TEST 3: Now that you know the offset, can properly use BRAM, and set up its comparator to video
 --          uncomment BRAM code at the bottom of the file
 --      If this works, the two waveforms in the BRAM should display on scopeface
 --    syntax might need work... vectors must be the proper size and proper type
 	ch1 <= '1' when (row - offset = unsigned(("00" & readL(15 downto 8)))) else '0';		
 	ch2 <= '1' when (row - offset = unsigned(("00" & readR(15 downto 8)))) else '0';
-
--- do we need all 18-bits or just the upper 16-bits to write to BRAM?
-	Lbus_out <= L_bus_out(17 downto 2);		-- Just the upper 16 Bits
-	Rbus_out <= R_bus_out(17 downto 2);
-	
--- BRAM needs UNSIGNED data, not SIGNED
--- convert Signed sample from Codec into a proper Unsigned value
-        -- SOMETHING_GOES_HERE
-    L_bus_out(17 downto 2) <= not(x"1000") and L_bus_out(17 downto 2);
-    R_bus_out(17 downto 2) <= not(x"1000") and R_bus_out(17 downto 2);
         
    
 	
@@ -258,7 +238,7 @@ begin
             clk => clk,
             exSel => exSel,
             result => w_DinMuxL,
-            busIn => L_bus_out(17 downto 2)
+            busIn => w_LBus_out
         );
 
     RDinMux : DinMux
@@ -267,7 +247,7 @@ begin
             clk => clk,
             exSel => exSel,
             result => w_DinMuxR,
-            busIn => R_bus_out(17 downto 2)
+            busIn => w_RBus_out
         );
     
     ENBMUX : wrEnbMux
@@ -279,34 +259,31 @@ begin
             result => w_wrEnbMux
         );
         
-        
-	-------------------------------------------------------------------------------
-	-- Address counter for RAM
-	--		00		hold
-	--		01		up
-	--		10		down
-	--		11		reset
-	-------------------------------------------------------------------------------	
-	writeCounter: process(clk)
+    memory_counter : lec10
+        generic map(
+         N => 10
+         )
+         port map(
+            clk => clk,
+             reset => '1',
+             crtl => cw(1 downto 0),
+             D => to_unsigned(20, 10),
+             Q => writeCntr);
+	
+	sw(1) <= '1' when (writeCntr = to_unsigned(640, 10)) else '0';
+	
+	process(clk)
 	begin
-		if (rising_edge(clk)) then
-			if (reset_n = '0') then
-				writeCntr <= "0000010100"; -- why is this not zero?
-			else 
-				case cw(1 downto 0) is
-					when "00" => writeCntr <= writeCntr + 0;
-			        when "01" => writeCntr <= writeCntr + 1;			
-					when "10" => writeCntr <= writeCntr - 1;			
-					when others => writeCntr <= "0000010100";
-				end case;
-			end if;
-		end if;
-	end process;
-	
-	sw_sig(1) <= '1' when (writeCntr = x"3FF") else '0';
-	
-
-
+	   if(rising_edge(clk)) then
+	       if(ready = '1') then
+	           w_Lbus_out <= not(fromADCL(17)) & fromADCL(16 downto 2);		-- Just the upper 16 Bits
+	           w_Rbus_out <= not(fromADCR(17)) & fromADCR(16 downto 2);
+	           toADCL <= fromADCL;
+	           toADCR <= fromADCR;
+	       end if;
+	   end if;
+    end process;
+    
 	-------------------------------------------------------------------------------
 	--  Buffer a copy of the sample memory to look for positive trigger crossing
 	--  "Loop back" digitized audio input to the output to confirm interface is working
@@ -322,7 +299,31 @@ begin
 		end if;
 	end process;
 	
+	Lbus_out <= w_Lbus_out;
+	Rbus_out <= w_Rbus_out;
 	
+    compareGL <= '1' when (w_Lbus_out > triggerVolt) else '0';
+    compareGR <= '1' when (w_Rbus_out > triggerVolt) else '0';
+
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if ready = '1' then
+                if w_Lbus_out < triggerVolt then
+                    QL <= '1';
+                else
+                    QL <= '0';
+                end if;
+                
+                if w_Rbus_out < triggerVolt then
+                    QR <= '1';
+                else
+                    QR <= '0';
+                end if;
+            end if;
+        end if;
+    end process;
+           
 	-------------------------------------------------------------------------------
 	-- Instantiate the video driver from Lab1 - should integrate smoothly
 	-------------------------------------------------------------------------------
@@ -343,7 +344,7 @@ begin
 
 -- Audio Codec stuff goes here
 
-sim_live <= '0';  --  '0' simulate audio; '1' live audio
+sim_live <= switch(3);  --  '0' simulate audio; '1' live audio
                   -- should a switch go here?
 
 Audio_Codec : Audio_Codec_Wrapper
@@ -355,10 +356,10 @@ Audio_Codec : Audio_Codec_Wrapper
         ac_bclk => ac_bclk,
         ac_lrclk => ac_lrclk,
         ready => ready,
-        L_bus_in => L_bus_in, -- left channel input to DAC
-        R_bus_in => R_bus_in, -- right channel input to DAC
-        L_bus_out => L_bus_out, -- left channel output from ADC
-        R_bus_out => R_bus_out, -- right channel output from ADC
+        L_bus_in => toADCL, -- left channel input to DAC
+        R_bus_in => toADCR, -- right channel input to DAC
+        L_bus_out => fromADCL, -- left channel output from ADC
+        R_bus_out => fromADCR, -- right channel output from ADC
         scl => scl,
         sda => sda,
         sim_live => sim_live);  --  '0' simulate audio; '1' live audio
@@ -367,6 +368,7 @@ Audio_Codec : Audio_Codec_Wrapper
 -- BRAM stuff goes here
 
 	reset <= not reset_n;
+	sw(0) <= ready;
 	
 	leftChannelMemory : BRAM_SDP_MACRO
 		generic map (

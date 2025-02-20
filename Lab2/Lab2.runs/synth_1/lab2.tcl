@@ -88,6 +88,7 @@ read_vhdl -library xil_defaultlib {
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/lab2_code_for_cadets/i2s_ctl.vhd
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/lab2_code_for_cadets/lab2_datapath.vhdl
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/lab2_code_for_cadets/lab2_fsm.vhdl
+  C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383/lec10.vhdl
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/lab1_cadet_code/scopeface.vhd
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/new/synchronize.vhd
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/lab1_cadet_code/tdms.vhdl
