@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Wed Feb 19 20:52:05 2025
+| Date         : Mon Feb 24 09:35:53 2025
 | Host         : C26-5CG2151LB4 running 64-bit major release  (build 9200)
 | Command      : report_drc -file lab2_drc_opted.rpt -pb lab2_drc_opted.pb -rpx lab2_drc_opted.rpx
 | Design       : lab2
@@ -24,12 +24,11 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max checks: <unlimited>
-             Checks found: 2
+             Checks found: 1
 +----------+----------+-----------------------------------------------------+--------+
 | Rule     | Severity | Description                                         | Checks |
 +----------+----------+-----------------------------------------------------+--------+
 | CFGBVS-1 | Warning  | Missing CFGBVS and CONFIG_VOLTAGE Design Properties | 1      |
-| IOSR-1   | Warning  | IOB set reset sharing                               | 1      |
 +----------+----------+-----------------------------------------------------+--------+
 
 2. REPORT DETAILS
@@ -45,12 +44,6 @@ Neither the CFGBVS nor CONFIG_VOLTAGE voltage property is set in the current_des
  #where value2 is the voltage provided to configuration bank 0
 
 Refer to the device configuration user guide for more information.
-Related violations: <none>
-
-IOSR-1#1 Warning
-IOB set reset sharing  
-IO reset_n connects to flops which have these datapath/video_inst/Inst_vga/uut1/processQ_reg[7]_4
-datapath/video_inst/Inst_vga/uut2/processQ_reg[5]_0 set/reset signals.  For optimal IOB flop packing there should be only one set/reset signal coming into the IOB.
 Related violations: <none>
 
 

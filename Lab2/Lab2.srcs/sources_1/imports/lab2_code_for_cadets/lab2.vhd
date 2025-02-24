@@ -17,7 +17,8 @@ use UNIMACRO.vcomponents.all;
 		    tmds : out  STD_LOGIC_VECTOR (3 downto 0);
             tmdsb : out  STD_LOGIC_VECTOR (3 downto 0);
 		    switch: in	STD_LOGIC_VECTOR(3 downto 0);
-		    btn: in	STD_LOGIC_VECTOR(4 downto 0));
+		    btn: in	STD_LOGIC_VECTOR(4 downto 0);
+		    led : out std_logic_vector(7 downto 0));
  end lab2;
 
 architecture behavior of lab2 is
@@ -53,7 +54,8 @@ component lab2_fsm is
     Port ( clk : in  STD_LOGIC;
            reset_n : in  STD_LOGIC;
            sw : in  STD_LOGIC_VECTOR (2 downto 0);
-           cw : out  STD_LOGIC_VECTOR (2 downto 0));
+           cw : out  STD_LOGIC_VECTOR (2 downto 0);
+           led : out std_logic_vector(7 downto 0));
 end component;
 begin
 
@@ -82,7 +84,7 @@ begin
 		Rbus_out => OPEN,
 		exLbus => "0000000000000000",
 		exRbus => "0000000000000000",		
-		flagQ => OPEN,
+		flagQ => led(4),
 		flagClear => '0');
 		
 			  
@@ -90,6 +92,7 @@ begin
 		clk => clk,
 		reset_n => reset_n,
 		sw => sw,
-		cw => cw);
+		cw => cw,
+		led => led);
 
 end behavior;

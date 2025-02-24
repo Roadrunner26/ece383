@@ -23,7 +23,9 @@ entity lab2_fsm is
     Port ( clk : in  STD_LOGIC;
            reset_n : in  STD_LOGIC;
            sw : in  STD_LOGIC_VECTOR (2 downto 0);
-           cw : out  STD_LOGIC_VECTOR (2 downto 0));
+           cw : out  STD_LOGIC_VECTOR (2 downto 0);
+           led : out std_logic_vector (7 downto 0)
+           );
 end lab2_fsm;
 
 architecture Behavioral of lab2_fsm is
@@ -77,5 +79,13 @@ begin
        
        cw(2) <= '1' when state = incr else
        '0';
+       led(3 downto 0) <= "0001" when state = reset else
+       "0010" when state = wait_ready else
+       "0100" when state = incr else
+       "1000" when state = compare else
+       "0000";
+       
+       
+       led(7 downto 5) <= sw(2 downto 0);
 end Behavioral;
 

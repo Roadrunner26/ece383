@@ -106,7 +106,7 @@ set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 2
   set_param xicom.use_bs_reader 1
-  set_param runs.launchOptions { -jobs 4  }
+  set_param runs.launchOptions { -jobs 8  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7a200tsbg484-1
   set_property board_part digilentinc.com:nexys_video:part0:1.2 [current_project]
@@ -122,8 +122,8 @@ OPTRACE "set parameters" START { }
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
   add_files -quiet C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/synth_1/lab2.dcp
-  read_ip -quiet C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci
   read_ip -quiet C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
+  read_ip -quiet c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/ip/clk_wiz_1_1/clk_wiz_1.xci
 OPTRACE "read constraints: implementation" START { }
   read_xdc C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/constrs_1/imports/lab2_code_for_cadets/Lab2.xdc
 OPTRACE "read constraints: implementation" END { }

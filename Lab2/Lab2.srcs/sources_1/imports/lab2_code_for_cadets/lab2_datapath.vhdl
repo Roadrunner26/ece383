@@ -55,7 +55,7 @@ architecture Behavioral of lab2_datapath is
     signal sim_live: std_logic;
     signal ready : std_logic;
 	signal toADCL, toADCR, fromADCL, fromADCR: std_logic_vector(17 downto 0);	    
-    signal triggerVolt, triggerTime : unsigned (15 downto 0);
+    signal triggerVolt, triggerTime : unsigned (9 downto 0);
     signal writeCntr : unsigned (9 downto 0);
     signal row, column: unsigned(9 downto 0);
     signal ch1, ch2, reset: std_logic;
@@ -171,7 +171,7 @@ begin
 --    syntax might need work... vectors must be the proper size and proper type
 	ch1 <= '1' when (row - offset = unsigned(("00" & readL(15 downto 8)))) else '0';		
 	ch2 <= '1' when (row - offset = unsigned(("00" & readR(15 downto 8)))) else '0';
-        
+    flagQ <= reset_n;
    
 	
 -- Need logic for the FLAG register
@@ -179,7 +179,7 @@ begin
     port map(
         Q => Q,
         clear => flagClear,
-        flagQ => flagQ,
+        flagQ => OPEN,
         clk => clk,
         set => ready,
         reset_n => reset_n
@@ -292,7 +292,7 @@ begin
 	begin
 		if (rising_edge(clk)) then
 			if reset_n = '0' then
-							
+					flagQ <= '0';		
 			elsif(ready = '1') then
 				    flagQ <= Q;	
 			end if;
@@ -302,20 +302,20 @@ begin
 	Lbus_out <= w_Lbus_out;
 	Rbus_out <= w_Rbus_out;
 	
-    compareGL <= '1' when (w_Lbus_out > triggerVolt) else '0';
-    compareGR <= '1' when (w_Rbus_out > triggerVolt) else '0';
+    w_compareGL <= '1' when (unsigned(w_Lbus_out) > triggerVolt) else '0';
+    w_compareGR <= '1' when (unsigned(w_Rbus_out) > triggerVolt) else '0';
 
     process(clk)
     begin
         if rising_edge(clk) then
             if ready = '1' then
-                if w_Lbus_out < triggerVolt then
+                if unsigned(w_Lbus_out) < triggerVolt then
                     QL <= '1';
                 else
                     QL <= '0';
                 end if;
                 
-                if w_Rbus_out < triggerVolt then
+                if unsigned(w_Rbus_out) < triggerVolt then
                     QR <= '1';
                 else
                     QR <= '0';
@@ -323,6 +323,8 @@ begin
             end if;
         end if;
     end process;
+    
+    sw(2) <= w_compareGL and w_compareLL;
            
 	-------------------------------------------------------------------------------
 	-- Instantiate the video driver from Lab1 - should integrate smoothly
@@ -344,7 +346,7 @@ begin
 
 -- Audio Codec stuff goes here
 
-sim_live <= switch(3);  --  '0' simulate audio; '1' live audio
+sim_live <= '0';--switch(3);  --  '0' simulate audio; '1' live audio
                   -- should a switch go here?
 
 Audio_Codec : Audio_Codec_Wrapper
