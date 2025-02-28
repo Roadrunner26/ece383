@@ -56,8 +56,6 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 2
-set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a200tsbg484-1
 
@@ -101,7 +99,7 @@ set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimm
 set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc]
 
-read_ip -quiet c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/ip/clk_wiz_1_1/clk_wiz_1.xci
+read_ip -quiet C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/ip/clk_wiz_1_1/clk_wiz_1.xci
 set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_board.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_ooc.xdc]

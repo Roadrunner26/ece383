@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Mon Feb 24 09:35:57 2025
+| Date         : Fri Feb 28 07:50:49 2025
 | Host         : C26-5CG2151LB4 running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file lab2_control_sets_placed.rpt
 | Design       : lab2
@@ -58,12 +58,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              49 |           10 |
+| No           | No                    | No                     |              49 |           14 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |              38 |           11 |
-| Yes          | No                    | No                     |               4 |            2 |
+| No           | Yes                   | No                     |              28 |            8 |
+| Yes          | No                    | No                     |              14 |            6 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              16 |            6 |
+| Yes          | Yes                   | No                     |              16 |            4 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -76,15 +76,15 @@ Table of Contents
 |  datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out2     | datapath/Audio_Codec/initialize_audio/twi_controller/FSM_gray_state[3]_i_1_n_0 |                                                                          |                2 |              4 |         2.00 |
 |  clk_IBUF                                                       | control/state_inferred__0/i__n_0                                               | control/FSM_onehot_state[3]_i_1_n_0                                      |                1 |              4 |         4.00 |
 |  datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out2 |                                                                                | datapath/video_inst/inst_dvid/shift_red[9]_i_1_n_0                       |                1 |              4 |         4.00 |
-|  datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out2     | datapath/Audio_Codec/initialize_audio/twi_controller/dataByte[6]_i_2_n_0       | datapath/Audio_Codec/initialize_audio/twi_controller/dataByte[6]_i_1_n_0 |                2 |              5 |         2.50 |
-|  datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out2     | datapath/Audio_Codec/initialize_audio/twi_controller/sclCnt[6]_i_2_n_0         | datapath/Audio_Codec/initialize_audio/twi_controller/sclCnt0_0           |                3 |              7 |         2.33 |
-|  datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out2 |                                                                                | datapath/video_inst/inst_dvid/shift_blue[7]_i_1_n_0                      |                3 |              8 |         2.67 |
-|  datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out2 |                                                                                | datapath/video_inst/inst_dvid/shift_green[7]_i_1_n_0                     |                2 |              8 |         4.00 |
+|  datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out2     | datapath/Audio_Codec/initialize_audio/twi_controller/dataByte[6]_i_2_n_0       | datapath/Audio_Codec/initialize_audio/twi_controller/dataByte[6]_i_1_n_0 |                1 |              5 |         5.00 |
+|  datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out2     | datapath/Audio_Codec/initialize_audio/twi_controller/sclCnt[6]_i_2_n_0         | datapath/Audio_Codec/initialize_audio/twi_controller/sclCnt0_0           |                2 |              7 |         3.50 |
+|  datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out2 |                                                                                | datapath/video_inst/inst_dvid/shift_green[7]_i_1_n_0                     |                3 |              8 |         2.67 |
 |  datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out2 |                                                                                | datapath/video_inst/inst_dvid/shift_red[7]_i_1_n_0                       |                2 |              8 |         4.00 |
-|  clk_IBUF                                                       |                                                                                | control/led[0]                                                           |                3 |             10 |         3.33 |
-|  datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out2 |                                                                                |                                                                          |                2 |             10 |         5.00 |
-|  datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out2     |                                                                                |                                                                          |                4 |             14 |         3.50 |
-|  datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out1 |                                                                                |                                                                          |                4 |             25 |         6.25 |
+|  datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out2 |                                                                                | datapath/video_inst/inst_dvid/shift_blue[7]_i_1_n_0                      |                2 |              8 |         4.00 |
+|  clk_IBUF                                                       | control/FSM_onehot_state_reg[2]_0                                              |                                                                          |                4 |             10 |         2.50 |
+|  datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out2 |                                                                                |                                                                          |                3 |             10 |         3.33 |
+|  datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out2     |                                                                                |                                                                          |                6 |             14 |         2.33 |
+|  datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out1 |                                                                                |                                                                          |                5 |             25 |         5.00 |
 +-----------------------------------------------------------------+--------------------------------------------------------------------------------+--------------------------------------------------------------------------+------------------+----------------+--------------+
 
 

@@ -74,7 +74,7 @@ begin
 	--		
 	-------------------------------------------------------------------------------
        cw(1 downto 0) <= "11" when state = reset else
-       "01" when state <= incr else
+       "01" when state = incr else
        "00";
        
        cw(2) <= '1' when state = incr else

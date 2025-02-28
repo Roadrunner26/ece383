@@ -94,16 +94,18 @@ end component synchronize;
 begin
 
 uut1 : counter
-generic map (pixel_width => 896)
+generic map (pixel_width => 800)
 port map(
     clk => clk,
     reset => reset_n,
-    ctrl => ctrl,
-    Q => w_Q
+    ctrl => '1',
+    Q => w_column
 );
 
+w_ctrl <= '1' when w_column = 799 else '0';
+
 uut2 : counter
-generic map (pixel_width => 527)
+generic map (pixel_width => 525)
 port map(
     clk => clk,
     reset => reset_n,
@@ -131,23 +133,22 @@ port map(
     clk => clk,
     h_sync => h_sync,
     v_sync => v_sync,
-    column => w_Q,
+    column => w_column,
     row => w_row,
     reset_n => reset_n,
     h_blank => w_h_blank,
     v_blank => w_v_blank
 );
    
-    process(clk)
-    begin
-        if (rising_edge(clk)) then
-            if(w_Q = 895) and (ctrl = '1') then
-                w_ctrl <= '1';
-            else w_ctrl <= '0';
-            end if;
-        end if;
-    end process;
-    w_column <= w_Q;
+--    process(clk)
+--    begin
+--        if (rising_edge(clk)) then
+--            if(w_Q = 895) and (ctrl = '1') then
+--                w_ctrl <= '1';
+--            else w_ctrl <= '0';
+--            end if;
+--        end if;
+--    end process;
     row <= w_row;
     column <= w_column;
     blank <= w_v_blank or w_h_blank;
