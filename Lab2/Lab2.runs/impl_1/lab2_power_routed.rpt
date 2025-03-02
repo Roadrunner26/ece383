@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date             : Fri Feb 28 07:51:56 2025
+| Date             : Sun Mar  2 15:40:27 2025
 | Host             : C26-5CG2151LB4 running 64-bit major release  (build 9200)
 | Command          : report_power -file lab2_power_routed.rpt -pb lab2_power_summary_routed.pb -rpx lab2_power_routed.rpx
 | Design           : lab2
@@ -124,17 +124,17 @@ Table of Contents
 2.2 Clock Constraints
 ---------------------
 
-+---------------------------------------------------------------+--------------------------------------------------------------------------+-----------------+
-| Clock                                                         | Domain                                                                   | Constraint (ns) |
-+---------------------------------------------------------------+--------------------------------------------------------------------------+-----------------+
-| clk_out1_clk_wiz_0                                            | datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out1_clk_wiz_0 |            40.0 |
-| clk_out1_clk_wiz_1                                            | datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out1_clk_wiz_1     |            81.4 |
-| clk_out2_clk_wiz_0                                            | datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out2_clk_wiz_0 |             8.0 |
-| clk_out2_clk_wiz_1                                            | datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out2_clk_wiz_1     |            20.0 |
-| clkfbout_clk_wiz_0                                            | datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clkfbout_clk_wiz_0 |            10.0 |
-| clkfbout_clk_wiz_1                                            | datapath/Audio_Codec/audiocodec_master_clock/inst/clkfbout_clk_wiz_1     |            10.0 |
-| datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_in1 | clk_IBUF                                                                 |            10.0 |
-+---------------------------------------------------------------+--------------------------------------------------------------------------+-----------------+
++-----------------------------------------------------------+--------------------------------------------------------------------------+-----------------+
+| Clock                                                     | Domain                                                                   | Constraint (ns) |
++-----------------------------------------------------------+--------------------------------------------------------------------------+-----------------+
+| clk_out1_clk_wiz_0                                        | datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out1_clk_wiz_0 |            40.0 |
+| clk_out1_clk_wiz_1                                        | datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out1_clk_wiz_1     |            81.4 |
+| clk_out2_clk_wiz_0                                        | datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clk_out2_clk_wiz_0 |             8.0 |
+| clk_out2_clk_wiz_1                                        | datapath/Audio_Codec/audiocodec_master_clock/inst/clk_out2_clk_wiz_1     |            20.0 |
+| clkfbout_clk_wiz_0                                        | datapath/video_inst/mmcm_adv_inst_display_clocks/inst/clkfbout_clk_wiz_0 |            10.0 |
+| clkfbout_clk_wiz_1                                        | datapath/Audio_Codec/audiocodec_master_clock/inst/clkfbout_clk_wiz_1     |            10.0 |
+| datapath/Audio_Codec/audiocodec_master_clock/inst/clk_in1 | clk_IBUF                                                                 |            10.0 |
++-----------------------------------------------------------+--------------------------------------------------------------------------+-----------------+
 
 
 3. Detailed Reports

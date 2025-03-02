@@ -58,11 +58,11 @@ begin
                     h_sync <= '1';
                 else h_sync <= '0';
                 end if;
-                if(row < 489 or row >= 490) then
+                if(row < 490 or row >= 492) then
                     v_sync <= '1';
                 else v_sync <= '0';
                 end if;
-                if(column < 640) then
+                if(column < 639) then
                     h_blank <= '0';
                 else h_blank <= '1';
                 end if;

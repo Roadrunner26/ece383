@@ -52,7 +52,7 @@ end VGA;
 
 architecture vga_arch of VGA is
 
-    signal w_ctrl : std_logic := '1';
+    signal w_ctrl : std_logic;
     signal ctrl : std_logic := '1';
     signal w_Q : unsigned(9 downto 0);
     signal w_row, w_column : unsigned (9 downto 0);
