@@ -47,32 +47,22 @@ architecture Behavioral of synchronize is
 
 begin
 
-    process(clk)
-    begin
-        if(rising_edge(clk)) then
-            if(reset_n = '0') then
-                v_sync <= '1';
-                h_sync <= '1';
-            else
-                if(column < 655 or column >= 751) then
-                    h_sync <= '1';
-                else h_sync <= '0';
-                end if;
-                if(row < 490 or row >= 492) then
-                    v_sync <= '1';
-                else v_sync <= '0';
-                end if;
-                if(column < 639) then
-                    h_blank <= '0';
-                else h_blank <= '1';
-                end if;
-                if(row < 480) then
-                    v_blank <= '0';
-                else v_blank <= '1';
-                end if;
-            end if;
-         end if;
-         
-    end process;
+    h_sync <=  '1' when reset_n = '0' else
+    '1' when column < 656 else
+    '1' when column > 751 else
+    '0';
+    
+    v_sync <= '1' when reset_n = '0' else
+    '1' when row < 490 else
+    '1' when row > 491 else
+    '0';
+    
+    h_blank <= '0' when column < 640 else
+    '1';
+    
+    v_blank <= '0' when row < 480 else
+    '1';
+    
+
 
 end Behavioral;

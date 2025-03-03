@@ -66,8 +66,8 @@ begin
     is_vertical_gridline <= ((column - column_start) mod grid_cell_width) = x"00";
     is_horizontal_gridline <= ((row - row_start) mod grid_cell_height) = x"00";
     is_gridline <= is_vertical_gridline or is_horizontal_gridline;
-    is_ch1 <= ch1 = '1';
-    is_ch2 <= ch2 = '1'; 
+    is_ch1 <= ch1_enb = '1';
+    is_ch2 <= ch2_enb = '1'; 
     is_out_of_bounds <= (row < row_start) or (row > row_end) or (column < column_start) or (column > column_end);
     is_hash_mark <= (((row mod x_axis) < (2*hash_height)) and (((column - column_start) mod horiz_hash_space) = 0)) or (((column mod y_axis) < (2*hash_height)) and (((row - row_start) mod vert_hash_space) = 0));            
     is_trigger_volt <= (((row >= trigger_volt - 5) and (row <= trigger_volt + 5)) and column = column_start) or (((row >= trigger_volt - 4) and (row <= trigger_volt + 4)) and column = column_start + 1) or (((row >= trigger_volt - 3) and (row <= trigger_volt + 3)) and column = column_start + 2) or (((row >= trigger_volt - 2) and (row <= trigger_volt + 2)) and column = column_start + 3) or (((row >= trigger_volt - 1) and (row <= trigger_volt + 1)) and column = column_start + 4) or ((row = trigger_volt) and column = column_start); 

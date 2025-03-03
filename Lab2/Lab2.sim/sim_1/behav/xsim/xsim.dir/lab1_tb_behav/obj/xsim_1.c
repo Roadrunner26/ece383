@@ -64,12 +64,12 @@ IKI_DLLESPEC extern void execute_8(char*, char *);
 IKI_DLLESPEC extern void execute_9(char*, char *);
 IKI_DLLESPEC extern void execute_10(char*, char *);
 IKI_DLLESPEC extern void execute_11(char*, char *);
+IKI_DLLESPEC extern void execute_85(char*, char *);
+IKI_DLLESPEC extern void execute_86(char*, char *);
+IKI_DLLESPEC extern void execute_56(char*, char *);
 IKI_DLLESPEC extern void execute_82(char*, char *);
 IKI_DLLESPEC extern void execute_83(char*, char *);
-IKI_DLLESPEC extern void execute_56(char*, char *);
-IKI_DLLESPEC extern void execute_79(char*, char *);
-IKI_DLLESPEC extern void execute_80(char*, char *);
-IKI_DLLESPEC extern void execute_81(char*, char *);
+IKI_DLLESPEC extern void execute_84(char*, char *);
 IKI_DLLESPEC extern void execute_54(char*, char *);
 IKI_DLLESPEC extern void execute_55(char*, char *);
 IKI_DLLESPEC extern void execute_58(char*, char *);
@@ -88,15 +88,18 @@ IKI_DLLESPEC extern void execute_74(char*, char *);
 IKI_DLLESPEC extern void execute_75(char*, char *);
 IKI_DLLESPEC extern void execute_76(char*, char *);
 IKI_DLLESPEC extern void execute_78(char*, char *);
+IKI_DLLESPEC extern void execute_79(char*, char *);
+IKI_DLLESPEC extern void execute_80(char*, char *);
+IKI_DLLESPEC extern void execute_81(char*, char *);
 IKI_DLLESPEC extern void vlog_transfunc_eventcallback(char*, char*, unsigned, unsigned, unsigned, char *);
 IKI_DLLESPEC extern void transaction_34(char*, char*, unsigned, unsigned, unsigned);
 IKI_DLLESPEC extern void vhdl_transfunc_eventcallback(char*, char*, unsigned, unsigned, unsigned, char *);
-funcp funcTab[37] = {(funcp)execute_2, (funcp)execute_3, (funcp)execute_4, (funcp)execute_5, (funcp)execute_6, (funcp)execute_7, (funcp)execute_8, (funcp)execute_9, (funcp)execute_10, (funcp)execute_11, (funcp)execute_82, (funcp)execute_83, (funcp)execute_56, (funcp)execute_79, (funcp)execute_80, (funcp)execute_81, (funcp)execute_54, (funcp)execute_55, (funcp)execute_58, (funcp)execute_59, (funcp)execute_64, (funcp)execute_65, (funcp)execute_66, (funcp)execute_67, (funcp)execute_68, (funcp)execute_69, (funcp)execute_70, (funcp)execute_71, (funcp)execute_72, (funcp)execute_73, (funcp)execute_74, (funcp)execute_75, (funcp)execute_76, (funcp)execute_78, (funcp)vlog_transfunc_eventcallback, (funcp)transaction_34, (funcp)vhdl_transfunc_eventcallback};
-const int NumRelocateId= 37;
+funcp funcTab[40] = {(funcp)execute_2, (funcp)execute_3, (funcp)execute_4, (funcp)execute_5, (funcp)execute_6, (funcp)execute_7, (funcp)execute_8, (funcp)execute_9, (funcp)execute_10, (funcp)execute_11, (funcp)execute_85, (funcp)execute_86, (funcp)execute_56, (funcp)execute_82, (funcp)execute_83, (funcp)execute_84, (funcp)execute_54, (funcp)execute_55, (funcp)execute_58, (funcp)execute_59, (funcp)execute_64, (funcp)execute_65, (funcp)execute_66, (funcp)execute_67, (funcp)execute_68, (funcp)execute_69, (funcp)execute_70, (funcp)execute_71, (funcp)execute_72, (funcp)execute_73, (funcp)execute_74, (funcp)execute_75, (funcp)execute_76, (funcp)execute_78, (funcp)execute_79, (funcp)execute_80, (funcp)execute_81, (funcp)vlog_transfunc_eventcallback, (funcp)transaction_34, (funcp)vhdl_transfunc_eventcallback};
+const int NumRelocateId= 40;
 
 void relocate(char *dp)
 {
-	iki_relocate(dp, "xsim.dir/lab1_tb_behav/xsim.reloc",  (void **)funcTab, 37);
+	iki_relocate(dp, "xsim.dir/lab1_tb_behav/xsim.reloc",  (void **)funcTab, 40);
 	iki_vhdl_file_variable_register(dp + 16904);
 	iki_vhdl_file_variable_register(dp + 16960);
 
