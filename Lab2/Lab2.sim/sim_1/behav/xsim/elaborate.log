@@ -6,4 +6,61 @@ Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
 Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.numeric_std
+Compiling package unisim.vcomponents
+Compiling package unimacro.vcomponents
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package ieee.std_logic_signed
+Compiling package ieee.vital_timing
+Compiling package ieee.vital_primitives
+Compiling package unisim.vpkg
+Compiling package ieee.math_real
+Compiling package ieee.std_logic_textio
+Compiling package vl.vl_types
+Compiling module xil_defaultlib.glbl
+Compiling architecture behavioral of entity xil_defaultlib.FlagRegister [flagregister_default]
+Compiling architecture behavioral of entity xil_defaultlib.WrAddrMux [wraddrmux_default]
+Compiling architecture behavioral of entity xil_defaultlib.DinMux [dinmux_default]
+Compiling architecture behavioral of entity xil_defaultlib.WrEnbMux [wrenbmux_default]
+Compiling architecture behavior of entity xil_defaultlib.lec10 [\lec10(n=10)\]
+Compiling module unisims_ver.IBUF
+Compiling module unisims_ver.MMCME2_ADV(CLKFBOUT_MULT_F=10.0,...
+Compiling module unisims_ver.BUFG
+Compiling module xil_defaultlib.clk_wiz_0_clk_wiz
+Compiling module xil_defaultlib.clk_wiz_0
+Compiling architecture behavioral of entity xil_defaultlib.counter [\counter(pixel_width=800)\]
+Compiling architecture behavioral of entity xil_defaultlib.counter [\counter(pixel_width=525)\]
+Compiling architecture scopeface_arch of entity xil_defaultlib.scopeFace [scopeface_default]
+Compiling architecture behavioral of entity xil_defaultlib.synchronize [synchronize_default]
+Compiling architecture vga_arch of entity xil_defaultlib.VGA [vga_default]
+Compiling architecture behavioral of entity xil_defaultlib.TDMS_encoder [tdms_encoder_default]
+Compiling architecture oddr_v of entity unisim.ODDR [\ODDR(ddr_clk_edge="SAME_EDGE",s...]
+Compiling architecture oddr2_v of entity unisim.ODDR2 [\ODDR2(ddr_alignment="C0",srtype...]
+Compiling architecture behavioral of entity xil_defaultlib.dvid [dvid_default]
+Compiling architecture obufds_v of entity unisim.OBUFDS [\OBUFDS(1,9)(1,7)(1,4)\]
+Compiling architecture structure of entity xil_defaultlib.video [video_default]
+Compiling architecture behavioral of entity xil_defaultlib.TWICtl [twictl_default]
+Compiling module xil_defaultlib.audio_init(stRegAddr1=4'b0,stReg...
+Compiling module unisims_ver.MMCME2_ADV(CLKFBOUT_MULT_F=10.0,...
+Compiling module xil_defaultlib.clk_wiz_1_clk_wiz
+Compiling module xil_defaultlib.clk_wiz_1
+Compiling architecture behavioral of entity xil_defaultlib.i2s_ctl [i2s_ctl_default]
+Compiling architecture rb18_internal_vhdl_v of entity unisim.RB18_INTERNAL_VHDL [\RB18_INTERNAL_VHDL(bram_size=18...]
+Compiling architecture ramb18e1_v of entity unisim.RAMB18E1 [\RAMB18E1(init_00="1000101111000...]
+Compiling architecture bram_v of entity unimacro.BRAM_SDP_MACRO [\BRAM_SDP_MACRO(device="7SERIES"...]
+Compiling architecture rb18_internal_vhdl_v of entity unisim.RB18_INTERNAL_VHDL [\RB18_INTERNAL_VHDL(bram_size=18...]
+Compiling architecture ramb18e1_v of entity unisim.RAMB18E1 [\RAMB18E1(init_00="1000101111000...]
+Compiling architecture bram_v of entity unimacro.BRAM_SDP_MACRO [\BRAM_SDP_MACRO(device="7SERIES"...]
+Compiling architecture behavioral of entity xil_defaultlib.Audio_Codec_Wrapper [audio_codec_wrapper_default]
+Compiling architecture bram_v of entity unimacro.BRAM_SDP_MACRO [\BRAM_SDP_MACRO(device="7SERIES"...]
+Compiling architecture bram_v of entity unimacro.BRAM_SDP_MACRO [\BRAM_SDP_MACRO(device="7SERIES"...]
+Compiling architecture behavioral of entity xil_defaultlib.lab2_datapath [lab2_datapath_default]
+Compiling architecture behavior of entity xil_defaultlib.lab2_datapath_tb
+Built simulation snapshot Lab2_datapath_tb_behav

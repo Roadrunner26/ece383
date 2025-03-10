@@ -98,11 +98,35 @@ ARCHITECTURE behavior OF Lab2_datapath_tb IS
    constant BIT_CLK_period : time := 40 ns;  -- Sets Bit Clock for Audio Codec to the necessary 25 MHz
 
 	-- FSM Control signals
-	type state_type is (RST, WAIT_TRIGGER, STORE_SAMPLE, WAIT_SAMPLE);
+	type state_type is (WAIT_TRIGGER, RST, STORE_SAMPLE, WAIT_SAMPLE);
 	signal state: state_type;
 
 
+
 BEGIN
+	state_proces: process(clk)  
+	begin
+		if (rising_edge(clk)) then
+			if (reset_n = '0') then 
+				state <= RST;
+			else 
+				case state is
+					when RST => 
+					   state <= WAIT_TRIGGER;
+				    when WAIT_TRIGGER =>
+				        if(ready = '1') then
+				            state <= incr;
+				        end if;
+				   when incr =>
+				        state <= WAIT_SAMPLE;
+				   when WAIT_SAMPLE =>
+				        if(ready = '0') then
+				            state <= wait_ready;
+				        end if;
+				end case;
+			end if;
+		end if;
+	end process;
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: lab2_datapath PORT MAP (
