@@ -48,7 +48,7 @@ begin
 	begin
 		if (rising_edge(clk)) then
 			if (reset = '0') then
-				processQ <= (others => '0');
+				processQ <= to_unsigned(20, N);
 			elsif (crtl = "01") then
 				processQ <= processQ + 1;
 			elsif (crtl = "10") then

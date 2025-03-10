@@ -23,7 +23,7 @@ USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 library UNISIM;
 use UNISIM.VComponents.all;
-use work.lab2Parts.all;		
+--use work.lab2Parts.all;		
  
 ENTITY Lab2_datapath_tb IS
 END Lab2_datapath_tb;

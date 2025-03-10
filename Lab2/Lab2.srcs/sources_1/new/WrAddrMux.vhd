@@ -47,7 +47,7 @@ begin
     process(clk)
         begin
             if(rising_edge(clk)) then
-                if(exSel = '1') then
+                if(exSel = '0') then
                     result <= exWrAddr;
                 else
                     result <= std_logic_vector(writeCntr);

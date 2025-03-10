@@ -1,0 +1,22 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../Lab2.srcs/sources_1/imports/lab2_code_for_cadets/Audio_Codec_Wrapper.vhd" \
+"../../../../Lab2.srcs/sources_1/new/DinMux.vhd" \
+"../../../../Lab2.srcs/sources_1/new/FlagRegister.vhd" \
+"../../../../Lab2.srcs/sources_1/imports/lab2_code_for_cadets/TWICtl.vhd" \
+"../../../../Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/new/VGA.vhd" \
+"../../../../Lab2.srcs/sources_1/new/WrAddrMux.vhd" \
+"../../../../Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/new/counter1.vhd" \
+"../../../../Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/lab1_cadet_code/dvid.vhdl" \
+"../../../../Lab2.srcs/sources_1/imports/lab2_code_for_cadets/i2s_ctl.vhd" \
+"../../../../Lab2.srcs/sources_1/imports/lab2_code_for_cadets/lab2_datapath.vhdl" \
+"../../../../Lab2.srcs/sources_1/imports/ece383/lec10.vhdl" \
+"../../../../Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/lab1_cadet_code/scopeface.vhd" \
+"../../../../Lab2.srcs/sources_1/imports/new/synchronize.vhd" \
+"../../../../Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/lab1_cadet_code/tdms.vhdl" \
+"../../../../Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/lab1_cadet_code/video.vhdl" \
+"../../../../Lab2.srcs/sources_1/new/wrEnbMux.vhd" \
+"../../../../Lab2.srcs/sim_1/imports/lab2_code_for_cadets/Lab2_datapath_tb.vhd" \
+
+# Do not sort compile order
+nosort

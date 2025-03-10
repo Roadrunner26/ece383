@@ -56,8 +56,6 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "clk_wiz_1_synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 2
-set_param xicom.use_bs_reader 1
 set_param project.vivado.isBlockSynthRun true
 set_msg_config -msgmgr_mode ooc_run
 OPTRACE "Creating in-memory project" START { }
@@ -77,10 +75,10 @@ set_property ip_output_repo c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_ip -quiet c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/ip/clk_wiz_1_1/clk_wiz_1.xci
-set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_board.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_ooc.xdc]
+read_ip -quiet c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/ip/clk_wiz_1_2/clk_wiz_1.xci
+set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_board.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -151,32 +149,32 @@ generate_parallel_reports -reports { "report_utilization -file clk_wiz_1_utiliza
 OPTRACE "synth reports" END { }
 
 if { [catch {
-  file copy -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1.dcp c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1.dcp
+  file copy -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1.dcp c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1.dcp
 } _RESULT ] } { 
   send_msg_id runtcl-3 status "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
   error "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
 }
 
 if { [catch {
-  write_verilog -force -mode synth_stub c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_stub.v
+  write_verilog -force -mode synth_stub c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_stub.v
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create a Verilog synthesis stub for the sub-design. This may lead to errors in top level synthesis of the design. Error reported: $_RESULT"
 }
 
 if { [catch {
-  write_vhdl -force -mode synth_stub c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_stub.vhdl
+  write_vhdl -force -mode synth_stub c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_stub.vhdl
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create a VHDL synthesis stub for the sub-design. This may lead to errors in top level synthesis of the design. Error reported: $_RESULT"
 }
 
 if { [catch {
-  write_verilog -force -mode funcsim c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_sim_netlist.v
+  write_verilog -force -mode funcsim c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_sim_netlist.v
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create the Verilog functional simulation sub-design file. Post-Synthesis Functional Simulation with this file may not be possible or may give incorrect results. Error reported: $_RESULT"
 }
 
 if { [catch {
-  write_vhdl -force -mode funcsim c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_sim_netlist.vhdl
+  write_vhdl -force -mode funcsim c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_sim_netlist.vhdl
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create the VHDL functional simulation sub-design file. Post-Synthesis Functional Simulation with this file may not be possible or may give incorrect results. Error reported: $_RESULT"
 }
@@ -186,32 +184,32 @@ if { [catch {
 
 
 if { [catch {
-  file copy -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1.dcp c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1.dcp
+  file copy -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1.dcp c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1.dcp
 } _RESULT ] } { 
   send_msg_id runtcl-3 status "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
   error "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
 }
 
 if { [catch {
-  file rename -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1_stub.v c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_stub.v
+  file rename -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1_stub.v c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_stub.v
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create a Verilog synthesis stub for the sub-design. This may lead to errors in top level synthesis of the design. Error reported: $_RESULT"
 }
 
 if { [catch {
-  file rename -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1_stub.vhdl c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_stub.vhdl
+  file rename -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1_stub.vhdl c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_stub.vhdl
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create a VHDL synthesis stub for the sub-design. This may lead to errors in top level synthesis of the design. Error reported: $_RESULT"
 }
 
 if { [catch {
-  file rename -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1_sim_netlist.v c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_sim_netlist.v
+  file rename -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1_sim_netlist.v c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_sim_netlist.v
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create the Verilog functional simulation sub-design file. Post-Synthesis Functional Simulation with this file may not be possible or may give incorrect results. Error reported: $_RESULT"
 }
 
 if { [catch {
-  file rename -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1_sim_netlist.vhdl c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_sim_netlist.vhdl
+  file rename -force C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.runs/clk_wiz_1_synth_1/clk_wiz_1_sim_netlist.vhdl c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_sim_netlist.vhdl
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create the VHDL functional simulation sub-design file. Post-Synthesis Functional Simulation with this file may not be possible or may give incorrect results. Error reported: $_RESULT"
 }
@@ -221,13 +219,13 @@ close [open .end.used_ip_cache.rst w]
 
 if {[file isdir C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.ip_user_files/ip/clk_wiz_1]} {
   catch { 
-    file copy -force c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_stub.v C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.ip_user_files/ip/clk_wiz_1
+    file copy -force c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_stub.v C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.ip_user_files/ip/clk_wiz_1
   }
 }
 
 if {[file isdir C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.ip_user_files/ip/clk_wiz_1]} {
   catch { 
-    file copy -force c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_1/clk_wiz_1_stub.vhdl C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.ip_user_files/ip/clk_wiz_1
+    file copy -force c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.gen/sources_1/ip/clk_wiz_1_2/clk_wiz_1_stub.vhdl C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.ip_user_files/ip/clk_wiz_1
   }
 }
 file delete __synthesis_is_running__

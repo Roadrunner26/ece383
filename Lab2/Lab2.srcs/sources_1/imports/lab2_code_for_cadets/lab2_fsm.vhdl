@@ -56,12 +56,8 @@ begin
 				   when incr =>
 				        state <= compare;
 				   when compare =>
-				        if(sw(1) = '1') then
-				            state <= reset;
-				        else
-				            if(ready = '0') then
-				                state <= wait_ready;
-				            end if;
+				        if(ready = '0') then
+				            state <= wait_ready;
 				        end if;
 				end case;
 			end if;

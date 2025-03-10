@@ -74,6 +74,7 @@ architecture Behavioral of lab2_datapath is
 	signal w_unsignedDIL, w_unsignedDIR : unsigned(15 downto 0);
 	signal w_Lbus_out, w_Rbus_out : std_logic_vector(15 downto 0);
 	signal w_compareGL, w_compareGR, w_compareLL, w_compareLR : std_logic;
+	signal nreset_n : std_logic;
 
     constant offset : unsigned(9 downto 0) := to_unsigned(92, 10);
     
@@ -171,7 +172,7 @@ begin
 --    syntax might need work... vectors must be the proper size and proper type
 	ch1 <= '1' when (row - offset = unsigned(("00" & readL(15 downto 8)))) else '0';		
 	ch2 <= '1' when (row - offset = unsigned(("00" & readR(15 downto 8)))) else '0';
-    flagQ <= reset_n;
+    nreset_n <= not reset_n;
    
 	
 -- Need logic for the FLAG register
@@ -346,7 +347,7 @@ begin
 
 -- Audio Codec stuff goes here
 
-sim_live <= '0';--switch(3);  --  '0' simulate audio; '1' live audio
+sim_live <= switch(2);  --  '0' simulate audio; '1' live audio
                   -- should a switch go here?
 
 Audio_Codec : Audio_Codec_Wrapper
