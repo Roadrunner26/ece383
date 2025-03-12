@@ -44,7 +44,7 @@ entity lab2_datapath is
     switch: in    STD_LOGIC_VECTOR(3 downto 0);
     exWrAddr: in std_logic_vector(9 downto 0);
     exWen, exSel: in std_logic;
-    Lbus_out, Rbus_out: out std_logic_vector(15 downto 0);
+    LBus_out, Rbus_out : out std_logic_vector(15 downto 0);
     exLbus, exRbus: in std_logic_vector(15 downto 0);
     flagQ: out std_logic;   
     flagClear: in std_logic); 
@@ -75,6 +75,7 @@ architecture Behavioral of lab2_datapath is
 	signal w_Lbus_out, w_Rbus_out : std_logic_vector(15 downto 0);
 	signal w_compareGL, w_compareGR, w_compareLL, w_compareLR : std_logic;
 	signal nreset_n : std_logic;
+	signal PLbus_out, PRbus_out: std_logic_vector(15 downto 0);
 
     constant offset : unsigned(9 downto 0) := to_unsigned(92, 10);
     
@@ -271,19 +272,24 @@ begin
              D => to_unsigned(20, 10),
              Q => writeCntr);
 	
-	sw(1) <= '1' when (writeCntr = to_unsigned(640, 10)) else '0';
+	sw(1) <= '1' when (writeCntr = to_unsigned(1000, 10)) else '0';
 	
-	process(clk)
-	begin
-	   if(rising_edge(clk)) then
-	       if(ready = '1') then
-	           w_Lbus_out <= not(fromADCL(17)) & fromADCL(16 downto 2);		-- Just the upper 16 Bits
-	           w_Rbus_out <= not(fromADCR(17)) & fromADCR(16 downto 2);
-	           toADCL <= fromADCL;
-	           toADCR <= fromADCR;
-	       end if;
-	   end if;
-    end process;
+--	process(clk)
+--	begin
+--	   if(rising_edge(clk)) then
+--	       if(ready = '1') then
+--	           PLbus_out <= w_Lbus_out;
+--	           PRbus_out <= w_Rbus_out;
+--	           w_Lbus_out <= not(fromADCL(17)) & fromADCL(16 downto 2);		-- Just the upper 16 Bits
+--	           w_Rbus_out <= not(fromADCR(17)) & fromADCR(16 downto 2);
+--	           toADCL <= fromADCL;
+--	           toADCR <= fromADCR;
+	           
+--	       end if;
+--	   end if;
+--    end process;
+    
+    
     
 	-------------------------------------------------------------------------------
 	--  Buffer a copy of the sample memory to look for positive trigger crossing
@@ -300,32 +306,43 @@ begin
 		end if;
 	end process;
 	
-	Lbus_out <= w_Lbus_out;
-	Rbus_out <= w_Rbus_out;
+	process(clk)
+	   begin
+	   if(rising_edge(clk)) then
+	       Lbus_out <= w_Lbus_out;
+	       Rbus_out <= w_Rbus_out;
+	       end if;
+	   end process;
 	
-    w_compareGL <= '1' when (unsigned(w_Lbus_out) > triggerVolt) else '0';
-    w_compareGR <= '1' when (unsigned(w_Rbus_out) > triggerVolt) else '0';
+--	w_compareLL <= '1' when (unsigned(PLbus_out) < triggerVolt) else '0';
+--	w_compareLR <= '1' when (unsigned(PRbus_out) < triggerVolt) else '0';
+	
+	
+--    w_compareGL <= '1' when (unsigned(w_Lbus_out) > triggerVolt) else '0';
+--    w_compareGR <= '1' when (unsigned(w_Rbus_out) > triggerVolt) else '0';
 
-    process(clk)
-    begin
-        if rising_edge(clk) then
-            if ready = '1' then
-                if unsigned(w_Lbus_out) < triggerVolt then
-                    QL <= '1';
-                else
-                    QL <= '0';
-                end if;
+--    process(clk)
+--    begin
+--        if rising_edge(clk) then
+--            if ready = '1' then
+--                if unsigned(w_Lbus_out) < triggerVolt then
+--                    QL <= '1';
+--                else
+--                    QL <= '0';
+--                end if;
                 
-                if unsigned(w_Rbus_out) < triggerVolt then
-                    QR <= '1';
-                else
-                    QR <= '0';
-                end if;
-            end if;
-        end if;
-    end process;
+--                if unsigned(w_Rbus_out) < triggerVolt then
+--                    QR <= '1';
+--                else
+--                    QR <= '0';
+--                end if;
+--            end if;
+--        end if;
+--    end process;
+                
     
-    sw(2) <= w_compareGL and w_compareLL;
+    
+    sw(2) <= '1';--w_compareGL and w_compareLL;
            
 	-------------------------------------------------------------------------------
 	-- Instantiate the video driver from Lab1 - should integrate smoothly
@@ -347,7 +364,7 @@ begin
 
 -- Audio Codec stuff goes here
 
-sim_live <= switch(2);  --  '0' simulate audio; '1' live audio
+sim_live <= switch(3);  --  '0' simulate audio; '1' live audio
                   -- should a switch go here?
 
 Audio_Codec : Audio_Codec_Wrapper
@@ -372,7 +389,7 @@ Audio_Codec : Audio_Codec_Wrapper
 
 	reset <= not reset_n;
 	sw(0) <= ready;
-	
+	w_wrAddrMux <= "00" & x"B4";
 	leftChannelMemory : BRAM_SDP_MACRO
 		generic map (
             BRAM_SIZE => "18Kb",            -- Target BRAM, "18Kb" or "36Kb"
@@ -460,7 +477,7 @@ Audio_Codec : Audio_Codec_Wrapper
             WE => "11",                     -- Input write enable, width defined by write port depth
             WRADDR => w_wrAddrMux,                -- Input write address, width defined by write port depth
             WRCLK => clk,                   -- 1-bit input write clock
-            WREN => w_wrEnbMux);              -- 1-bit input write port enable
+            WREN => '1');--w_wrEnbMux);              -- 1-bit input write port enable
             -- End of BRAM_SDP_MACRO_inst instantiation
 
 
@@ -552,9 +569,10 @@ Audio_Codec : Audio_Codec_Wrapper
             WE => "11",                        -- Input write enable, width defined by write port depth
             WRADDR => w_wrAddrMux,                -- Input write address, width defined by write port depth
             WRCLK => clk,                    -- 1-bit input write clock
-            WREN => w_wrEnbMux);                -- 1-bit input write port enable
+            WREN => '1');--w_wrEnbMux);                -- 1-bit input write port enable
             -- End of BRAM_SDP_MACRO_inst instantiation
 
 
 end Behavioral;
+
 

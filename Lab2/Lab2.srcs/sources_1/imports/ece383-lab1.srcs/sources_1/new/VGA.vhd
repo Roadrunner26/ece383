@@ -154,3 +154,10 @@ port map(
     blank <= w_v_blank or w_h_blank;
 
 end vga_arch;
+
+
+    
+--     column <= w_col;
+--     row <= w_row;
+
+--end vga_arch;

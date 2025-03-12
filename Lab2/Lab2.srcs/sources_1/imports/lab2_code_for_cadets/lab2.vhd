@@ -54,8 +54,7 @@ component lab2_fsm is
     Port ( clk : in  STD_LOGIC;
            reset_n : in  STD_LOGIC;
            sw : in  STD_LOGIC_VECTOR (2 downto 0);
-           cw : out  STD_LOGIC_VECTOR (2 downto 0);
-           led : out std_logic_vector(7 downto 0));
+           cw : out  STD_LOGIC_VECTOR (2 downto 0));
 end component;
 begin
 
@@ -92,7 +91,6 @@ begin
 		clk => clk,
 		reset_n => reset_n,
 		sw => sw,
-		cw => cw,
-		led => led);
+		cw => cw);
 
 end behavior;
