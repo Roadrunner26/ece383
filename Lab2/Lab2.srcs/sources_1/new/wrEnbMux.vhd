@@ -44,16 +44,19 @@ end WrEnbMux;
 architecture Behavioral of wrEnbMux is
 
 begin
-    process(clk)
-        begin
-            if(rising_edge(clk)) then
-                if(exSel = '1') then
-                    result <= exWen;
-                else
-                    result <= cw;
-                end if;
-            end if;
-        end process;
+
+    result <= exWen when exSel = '1' else
+    cw;
+--    process(clk)
+--        begin
+--            if(rising_edge(clk)) then
+--                if(exSel = '1') then
+--                    result <= exWen;
+--                else
+--                    result <= cw;
+--                end if;
+--            end if;
+--        end process;
 
 
 end Behavioral;

@@ -44,16 +44,19 @@ end WrAddrMux;
 architecture Behavioral of wrAddrMux is
 
 begin
-    process(clk)
-        begin
-            if(rising_edge(clk)) then
-                if(exSel = '0') then
-                    result <= exWrAddr;
-                else
-                    result <= std_logic_vector(writeCntr);
-                end if;
-            end if;
-        end process;
+    result <= std_logic_vector(writeCntr) when exSel = '0' else
+    exWrAddr;
+    
+--    process(clk)
+--        begin
+--            if(rising_edge(clk)) then
+--                if(exSel = '0') then
+--                    result <= exWrAddr;
+--                else
+--                    result <= std_logic_vector(writeCntr);
+--                end if;
+--            end if;
+--        end process;
 
 
 end Behavioral;

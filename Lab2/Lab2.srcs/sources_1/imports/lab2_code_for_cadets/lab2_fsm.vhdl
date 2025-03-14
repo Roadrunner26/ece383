@@ -29,13 +29,15 @@ entity lab2_fsm is
 end lab2_fsm;
 
 architecture Behavioral of lab2_fsm is
-    signal ready : std_logic;
+    signal readyCompare, readyReady, readyTrigger : std_logic;
 
-	type state_type is (compare, reset, wait_ready, incr);
+	type state_type is (Reset, WaitReady, StoreSample, WaitTrigger);
 	signal state: state_type;
 
 begin
-    ready <= sw(0);
+    readyCompare <= sw(0);
+    readyReady <= sw(1);
+    readyTrigger <= sw(2);
 	-------------------------------------------------------------------------------
 	--		SW		meaning
 	--		
@@ -47,20 +49,24 @@ begin
 				state <= reset;
 			else 
 				case state is
-					when reset => 
-					   state <= wait_ready;
-				    when wait_ready =>
-				        if(ready = '1') then
-				            state <= incr;
+					when Reset => 
+					   state <= WaitTrigger;
+				    when WaitTrigger =>
+					   if(readyTrigger = '1') then
+					       state <= WaitReady;
+					   end if;
+				    when WaitReady =>
+				        if(readyReady = '1') then
+				            state <= StoreSample;
 				        end if;
-				   when incr =>
-				        state <= compare;
-				   when compare =>
-				        if(sw(1) = '0') then
-				            state <= wait_ready;
+				   when StoreSample =>
+				   	    if(readyCompare = '0') then
+				            state <= WaitReady;
 				        else
-				            state <= reset;
+				            state <= Reset;
 				        end if;
+
+                    
 				end case;
 			end if;
 		end if;
@@ -71,18 +77,12 @@ begin
 	--		CW		meaning
 	--		
 	-------------------------------------------------------------------------------
-       cw(1 downto 0) <= "11" when state = reset else
-       "01" when state = incr else
+       cw(1 downto 0) <= "11" when state = Reset else
+       "01" when state = StoreSample else
        "00";
        
-       cw(2) <= '1' when state = incr else
+       cw(2) <= '1' when state = StoreSample else
        '0';
---       led(3 downto 0) <= "0001" when state = reset else
---       "0010" when state = wait_ready else
---       "0100" when state = incr else
---       "1000" when state = compare else
---       "0000";
        
        
-       led(7 downto 5) <= sw(2 downto 0);
 end Behavioral;

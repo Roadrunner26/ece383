@@ -44,16 +44,19 @@ end DinMux;
 architecture Behavioral of DinMux is
 
 begin
-    process(clk)
-        begin
-            if(rising_edge(clk)) then
-                if(exSel = '1') then
-                    result <= exBus;
-                else
-                    result <= busIn;
-                end if;
-            end if;
-        end process;
+
+    result <= exBus when exSel = '1' else
+    busIn;
+--    process(clk)
+--        begin
+--            if(rising_edge(clk)) then
+--                if(exSel = '1') then
+--                    result <= exBus;
+--                else
+--                    result <= busIn;
+--                end if;
+--            end if;
+--        end process;
 
 
 end Behavioral;

@@ -54,7 +54,7 @@ begin
 			elsif (crtl = "10") then
 				processQ <= unsigned(D);
 			elsif (crtl = "11") then
-				processQ <= (others => '0');
+				processQ <= to_unsigned(20, N);
 			end if;
 		end if;
 	end process;

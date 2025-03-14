@@ -53,30 +53,27 @@ end lab2_datapath;
 architecture Behavioral of lab2_datapath is
 
     signal sim_live: std_logic;
-    signal ready : std_logic;
 	signal toADCL, toADCR, fromADCL, fromADCR: std_logic_vector(17 downto 0);	    
     signal triggerVolt, triggerTime : unsigned (9 downto 0);
     signal writeCntr : unsigned (9 downto 0);
     signal row, column: unsigned(9 downto 0);
     signal ch1, ch2, reset: std_logic;
     signal readL, readR : std_logic_vector(15 downto 0);
-    signal QL, QR, Q, G, L : std_logic;
-    signal tr_volt, tr_time : std_logic;
-    signal ctrl : std_logic;
+    signal Q : std_logic;
     signal w_wrEnbMux : std_logic;
-    signal w_WrAddrMux : std_logic_vector(9 downto 0);
+    signal w_wrAddrMux : std_logic_vector(9 downto 0);
     signal w_DinMuxL, w_DinMuxR : std_logic_vector(15 downto 0);
     signal btn_up_pressed : std_logic := '0';
     signal btn_down_pressed : std_logic := '0';
 	signal btn_right_pressed : std_logic := '0';
 	signal btn_left_pressed : std_logic := '0';
-	signal w_D0WasteL, w_D0WasteR : std_logic_vector(5 downto 0);
-	signal w_unsignedDIL, w_unsignedDIR : unsigned(15 downto 0);
 	signal w_Lbus_out, w_Rbus_out : std_logic_vector(15 downto 0);
 	signal w_compareGL, w_compareGR, w_compareLL, w_compareLR : std_logic;
 	signal nreset_n : std_logic;
 	signal PLbus_out, PRbus_out: std_logic_vector(15 downto 0);
-
+	signal UnLeftCur, UnRightCur, UnLeftPrev, UnRightPrev : unsigned(9 downto 0) := to_unsigned(0,10);
+    signal readyTrigger, readyCompare, readyReady : std_logic;
+    
     constant offset : unsigned(9 downto 0) := to_unsigned(92, 10);
     
     
@@ -165,7 +162,6 @@ component lec10 is
 			Q: out unsigned (N-1 downto 0));
 end component;
 
-
 begin
 -- TEST 3: Now that you know the offset, can properly use BRAM, and set up its comparator to video
 --          uncomment BRAM code at the bottom of the file
@@ -183,7 +179,7 @@ begin
         clear => flagClear,
         flagQ => OPEN,
         clk => clk,
-        set => ready,
+        set => readyReady,
         reset_n => reset_n
     );
 	
@@ -196,17 +192,17 @@ begin
 		    else
                 if(btn(0) = '1' and btn_up_pressed = '0') then
                     btn_up_pressed <= '1';
-                    triggerVolt <= triggerVolt - 1;
+                    triggerVolt <= triggerVolt - 4;
                 elsif(btn(2) = '1' and btn_down_pressed = '0') then
                     btn_down_pressed <= '1';
-                    triggerVolt <= triggerVolt + 1;
+                    triggerVolt <= triggerVolt + 4;
                 end if;
                 if(btn(1) = '1' and btn_left_pressed = '0') then
                     btn_left_pressed <= '1';
-                    triggerTime <= triggerTime - 1;
+                    triggerTime <= triggerTime - 4;
                 elsif(btn(3) = '1' and btn_right_pressed = '0') then
                     btn_right_pressed <= '1';
-                    triggerTime <= triggerTime + 1;
+                    triggerTime <= triggerTime + 4;
                 end if;
                 if(btn(0) = '0') then
                     btn_up_pressed <= '0';
@@ -223,18 +219,100 @@ begin
             end if;
         end if;
     end process;
-    
 
-	CntrMux : WrAddrMux
+    
+    ENBMUX : wrEnbMux
+        port map(
+            clk => clk,
+            cw => cw(2),
+            exSel => exSel,
+            exWen => exWen,
+            result => w_wrEnbMux
+        );
+        
+    memory_counter : lec10
+        generic map(
+         N => 10
+         )
+         port map(
+            clk => clk,
+             reset => reset_n,
+             crtl => cw(1 downto 0),
+             D => to_unsigned(20, 10),
+             Q => writeCntr);
+	
+	readyCompare <= '1' when (writeCntr = to_unsigned(1020, 10)) else '0';
+	-------------------------------------------------------------------------------
+	--  Buffer a copy of the sample memory to look for positive trigger crossing
+	--  "Loop back" digitized audio input to the output to confirm interface is working
+	-------------------------------------------------------------------------------
+	process(clk)
+	begin
+	   if(rising_edge(clk)) then
+	       if(readyReady = '1') then
+	           toADCL <= fromADCL;
+	           toADCR <= fromADCR;
+	           w_Lbus_out <= not(fromADCL(17)) & fromADCL(16 downto 2);		-- Just the upper 16 Bits
+	           w_Rbus_out <= not(fromADCR(17)) & fromADCR(16 downto 2);
+	       end if;
+	   end if;
+    end process;
+	
+
+
+-----------------------------------------------------------------------------------------
+--Trigger Logic : A positive trigger cross happens when the previous value is less than
+--  or equal and the current value is greater than to trigger. Set sw(0) so FSM records samples.
+-----------------------------------------------------------------------------------------
+
+
+    process(clk)
+    begin
+        if(rising_edge(clk)) then
+            if reset_n = '0' then
+                UnRightCur <= to_unsigned(0, 10);
+                UnRightPrev <= UnRightCur;
+            else
+                if(readyReady = '1') then
+                    UnRightPrev <= UnRightCur;
+                    UnRightCur <= (unsigned("00" & w_Rbus_out(15 downto 8))) + offset;
+                end if;
+           end if;
+       end if;
+   end process;
+   
+   readyTrigger <= '1' when (UnRightCur > triggerVolt and UnRightPrev <= triggerVolt) else
+   '0';
+
+	process (clk)
+	begin
+		if (rising_edge(clk)) then
+			if reset_n = '0' then
+					flagQ <= '0';		
+			elsif(readyReady = '1') then
+				    flagQ <= Q;	
+			end if;
+		end if;
+	end process;
+	
+	process(clk)
+	   begin
+	   if(rising_edge(clk)) then
+	       Lbus_out <= w_Lbus_out;
+	       Rbus_out <= w_Rbus_out;
+	       end if;
+	   end process;
+                
+    CntrMux : WrAddrMux
 	   port map(
 	       clk => clk,
 	       exSel => exSel,
 	       exWrAddr => exWrAddr,
 	       writeCntr => writeCntr,
-	       result => w_WrAddrMux
+	       result => w_wrAddrMux
 	   );
-
-    LDinMux : DinMux
+	   
+        LDinMux : DinMux
         port map(
             exBus => exLBus,
             clk => clk,
@@ -252,97 +330,8 @@ begin
             busIn => w_RBus_out
         );
     
-    ENBMUX : wrEnbMux
-        port map(
-            clk => clk,
-            cw => cw(2),
-            exSel => exSel,
-            exWen => exWen,
-            result => w_wrEnbMux
-        );
-        
-    memory_counter : lec10
-        generic map(
-         N => 10
-         )
-         port map(
-            clk => clk,
-             reset => '1',
-             crtl => cw(1 downto 0),
-             D => to_unsigned(20, 10),
-             Q => writeCntr);
-	
-	sw(1) <= '1' when (writeCntr = to_unsigned(1000, 10)) else '0';
-	
---	process(clk)
---	begin
---	   if(rising_edge(clk)) then
---	       if(ready = '1') then
---	           PLbus_out <= w_Lbus_out;
---	           PRbus_out <= w_Rbus_out;
---	           w_Lbus_out <= not(fromADCL(17)) & fromADCL(16 downto 2);		-- Just the upper 16 Bits
---	           w_Rbus_out <= not(fromADCR(17)) & fromADCR(16 downto 2);
---	           toADCL <= fromADCL;
---	           toADCR <= fromADCR;
-	           
---	       end if;
---	   end if;
---    end process;
     
-    
-    
-	-------------------------------------------------------------------------------
-	--  Buffer a copy of the sample memory to look for positive trigger crossing
-	--  "Loop back" digitized audio input to the output to confirm interface is working
-	-------------------------------------------------------------------------------
-	process (clk)
-	begin
-		if (rising_edge(clk)) then
-			if reset_n = '0' then
-					flagQ <= '0';		
-			elsif(ready = '1') then
-				    flagQ <= Q;	
-			end if;
-		end if;
-	end process;
-	
-	process(clk)
-	   begin
-	   if(rising_edge(clk)) then
-	       Lbus_out <= w_Lbus_out;
-	       Rbus_out <= w_Rbus_out;
-	       end if;
-	   end process;
-	
---	w_compareLL <= '1' when (unsigned(PLbus_out) < triggerVolt) else '0';
---	w_compareLR <= '1' when (unsigned(PRbus_out) < triggerVolt) else '0';
-	
-	
---    w_compareGL <= '1' when (unsigned(w_Lbus_out) > triggerVolt) else '0';
---    w_compareGR <= '1' when (unsigned(w_Rbus_out) > triggerVolt) else '0';
 
---    process(clk)
---    begin
---        if rising_edge(clk) then
---            if ready = '1' then
---                if unsigned(w_Lbus_out) < triggerVolt then
---                    QL <= '1';
---                else
---                    QL <= '0';
---                end if;
-                
---                if unsigned(w_Rbus_out) < triggerVolt then
---                    QR <= '1';
---                else
---                    QR <= '0';
---                end if;
---            end if;
---        end if;
---    end process;
-                
-    
-    
-    sw(2) <= '1';--w_compareGL and w_compareLL;
            
 	-------------------------------------------------------------------------------
 	-- Instantiate the video driver from Lab1 - should integrate smoothly
@@ -375,7 +364,7 @@ Audio_Codec : Audio_Codec_Wrapper
         ac_dac_sdata => ac_dac_sdata,
         ac_bclk => ac_bclk,
         ac_lrclk => ac_lrclk,
-        ready => ready,
+        ready => readyReady,
         L_bus_in => toADCL, -- left channel input to DAC
         R_bus_in => toADCR, -- right channel input to DAC
         L_bus_out => fromADCL, -- left channel output from ADC
@@ -388,8 +377,6 @@ Audio_Codec : Audio_Codec_Wrapper
 -- BRAM stuff goes here
 
 	reset <= not reset_n;
-	sw(0) <= ready;
-	w_wrAddrMux <= "00" & x"B4";
 	leftChannelMemory : BRAM_SDP_MACRO
 		generic map (
             BRAM_SIZE => "18Kb",            -- Target BRAM, "18Kb" or "36Kb"
@@ -475,9 +462,9 @@ Audio_Codec : Audio_Codec_Wrapper
             REGCE => '1',                   -- 1-bit input read output register enable
             DI => w_DinMuxL,                   -- Input data port, width defined by WRITE_WIDTH parameter
             WE => "11",                     -- Input write enable, width defined by write port depth
-            WRADDR => w_wrAddrMux,                -- Input write address, width defined by write port depth
+            WRADDR => w_wrAddrMux,--std_logic_vector(writeCntr), --w_wrAddrMux,                -- Input write address, width defined by write port depth
             WRCLK => clk,                   -- 1-bit input write clock
-            WREN => '1');--w_wrEnbMux);              -- 1-bit input write port enable
+            WREN => w_wrEnbMux); --'1');             -- 1-bit input write port enable
             -- End of BRAM_SDP_MACRO_inst instantiation
 
 
@@ -567,12 +554,13 @@ Audio_Codec : Audio_Codec_Wrapper
             REGCE => '1',                   -- 1-bit input read output register enable
             DI => w_DinMuxR,                    -- Input data port, width defined by WRITE_WIDTH parameter
             WE => "11",                        -- Input write enable, width defined by write port depth
-            WRADDR => w_wrAddrMux,                -- Input write address, width defined by write port depth
+            WRADDR => w_wrAddrMux, --std_logic_vector(writeCntr), --w_wrAddrMux,                -- Input write address, width defined by write port depth
             WRCLK => clk,                    -- 1-bit input write clock
-            WREN => '1');--w_wrEnbMux);                -- 1-bit input write port enable
+            WREN => w_wrEnbMux);                -- 1-bit input write port enable
             -- End of BRAM_SDP_MACRO_inst instantiation
-
+    
+    sw(0) <= readyCompare;
+    sw(1) <= readyReady;
+    sw(2) <= readyTrigger;
 
 end Behavioral;
-
-
