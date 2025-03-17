@@ -96,6 +96,69 @@ on teams sent to Lt. Col Trimble.
 
 Conclusion - Explain what your learned from this lab and what changes you would recommend in future years to this lab or the lectures leading up to this lab.
 
+
 I learned that I must start labs early or risk falling behind. Because bit streams take so long, you should not treat them like a compile and run in a normal program because you will lose many hours trying to 
 implement small changes at once. I would recommend in the future that students work on many seperate, independent problems simultaneously and comparing all those results in one bitstream generation. No changes 
 recommended for future years, I was very satisfied with this lab.
+
+**Lab 2**
+![Image (9)](https://github.com/user-attachments/assets/72bfe563-f0f4-487c-8f29-8c88fe0caa4c)
+
+![Image (10)](https://github.com/user-attachments/assets/d47b72f7-2edb-4b02-9507-299c7388274c)
+
+
+In lab 2, we were looking to expand on our goals from lab 1 and create a working oscilloscope. Where in Lab 1, we created the Video component with working VGA, scopeFace and synchronize, in lab 2 we significantly increased the capability and robustness of this oscilloscope. Taking audio data from an audiocodec, we stored memory inside a BRAM and implemented triggers to be able see live audio data from the headphone jack appear stationary. As the trigger voltage moved up and down as a result of button presses, the audio data would trigger on that voltage, looking stationary.
+Modules:
+Lab 2:
+	Purpose: Top File
+	Inputs: clk, reset_n, ctrl, ac_adc_sdata(in), scl, sda
+	Outputs: ac_mclk, ac_bclk, ac_lrclk
+	Behavior: Connects finite state machine to the datapath.
+Lab 2 Datapath:
+	Purpose: Take input from the computer audio jack and output a voltage to display on the computer screen through the HDMI cable.
+	Inputs: clk, reset_n, ctrl, ac_adc_sdata(in), scl, sda, sim_live, exWrAddr, exWen, exSel, ch1_enable, ch2_enable, flagClear, exRBus, exLBus, cw(2 downto 0)
+	Outputs: ac_bclk, ac_lrclk, scl, sda, ac_mclk, sw(2 downto 0), L_Bus_Out, R_Bus_Out, tr_volt, tr_time, flagQ, tmds, tmdsb, ac_dac_sdata(out)
+	Behavior: Takes in control words and switches on the clock cycle and directs the Audio Codec Wrapper and BRAM to write data to the monitor. It can either use internal or external data that is flipped on by a switch, denoted by sim_live. Additionally, can turn on or off channels and change the trigger voltage or trigger time that the data triggers on. Provides a status word to the FSM (Control Unit) that determines the next state.
+Lab 2 Control Unit:
+	Purpose: Responsible for directing the datapath to cycle through different states based on a control word output.
+	Inputs: clk, reset_n, sw(2 downto 0).
+	Outputs: cw(2 downto 0).
+	Behavior: Provides a control word to the datapath based on the current state and the input (the status word).
+Flag Register:
+	Purpose: Provides a way for the top module to see when readyReady (sw(1)) is set.
+	Inputs: clk, reset_n, readyReady, flagClear.
+	Outputs: flagQ
+	Behavior: When readyReady is set on the clock edge, flagQ gets 1, when flagClear is set, flagQ gets 0.
+wrAddrMux:
+	Purpose: Provide an address to the BRAM.
+	Inputs: exSel (select bit), writeCntr, exWrAddr
+	Outputs: w_wrAddrMux
+	Behavior: sets w_wrAddrMux to writeCntr when exSel (switch(2)) is 1, exWrAddr when exSel is 0.
+DinMux (Left and Right):
+	Purpose: Provide data in to the left and right BRAMs to display onto the HDMI monitor.
+	Inputs: ExXBus, w_Xbus_out, exSel (select bit)
+	Outputs: w_DinMuxX
+	Behavior: w_DinMuxX gets exLBus when exSel is 1, w_Xbus_out when exSel is 0.
+Memory Counter:
+	Purpose: increment memory addresses to provide to the WrAddrMux.
+	Inputs: cw(1:0)
+	Outputs: writeCntr
+	Behavior: every clock cycle, it reads the control word and either resets, increments, or holds the current value.
+wrEnbMux:
+	Purpose: Provides the enable bit to the BRAM
+	Inputs: cw(2), exWen, exSel (select bit)
+	Outputs: w_wrEnbMux
+	Behavior: w_wrEnbMux gets exWen when exSel is 1, cw(2) when 0.
+
+
+This lab was a fascinating test in patience. I often tried to change one variable at a time while coding and debugging this lab, but the generate bitstream time guaranteed that I needed to wait at least 12 minutes to compile before being able to test functionality. This led to an interesting case study where the entire lab would break if something messed up, but it wasn’t time efficient to change only one line of code per bitstream generation.
+Live data didn’t work and the screen didn’t scroll when the compare statement was less than 1020. To be honest I am not entirely sure why this didn’t work. Lt Col Trimble eventually had to write me a youtube video to help me debug this, we pretty much disconnected every wire and hard coded it to a specific value to force functionality. When I connected all these wires back, I found a couple of uninstantiated wires that were driving muxes and realized that must have been one of the problems. It was really quite odd that the entire lab would break and not work at all when fixing a thought to be isolated problem.
+I could not get the debounce to work in time to submit this lab. I tried implementing the debounce file in both the datapath, the top file, and inside a separate trigger component, but it appeared that my buttons would cycle because the input was not communicating with the debouncer.
+
+Gate Check 1			2/11/2025	Fully achieved via teams demo.
+Gate Check 2			2/15/2025	Fully achieved via teams demo.
+Gate Check 3			3/13/2025	Fully achieved via in class demo.
+Required Functionality 	3/13/2025	Fully achieved via in class demo.
+B Level Functionality		3/13/2025	Fully achieved via in class demo.
+A Level Functionality		3/13/2025	partially achieved via in class demo. Debouncing buttons do not work.
+ 
