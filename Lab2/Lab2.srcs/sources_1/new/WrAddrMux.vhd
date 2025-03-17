@@ -1,21 +1,21 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 02/12/2025 09:52:45 AM
--- Design Name: 
--- Module Name: wrEnbMux - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Name:	Grantham Zimmerman
+-- Date:	Spring 2025
+-- File:    WrAddrMux.vhd
+-- HW:	    Lab 2 
+-- Pupr:	Lab 2 Mux to give WrAddress to BRAM 
+--
+-- Doc:	Sam Quick and I unsuccessfully verbally talked about trigger logic, reset logic, and worked on the datapath to see 
+--if we could successfully get the monitor to show a scroll. This did not work. Lt Col Trimble showed me through a youtube video 
+--how to debug my datapath to get simlive to show up. He also showed me how to deal with my fromADCX signals with a clock process 
+--to ensure triggering showed up correctly.
+-- 	
+-- Academic Integrity Statement: I certify that, while others may have 
+-- assisted me in brain storming, debugging and validating this program, 
+-- the program itself is my own work. I understand that submitting code 
+-- which is the work of other individuals is a violation of the honor   
+-- code.  I also understand that if I knowingly give my original work to 
+-- another individual is also a violation of the honor code. 
 ----------------------------------------------------------------------------------
 
 

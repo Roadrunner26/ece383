@@ -58,7 +58,6 @@ if {$::dispatch::connected} {
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 2
 set_param xicom.use_bs_reader 1
-set_msg_config -id {Common 17-41} -limit 10000000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a200tsbg484-1
 
@@ -82,8 +81,10 @@ read_vhdl -library xil_defaultlib {
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/new/DinMux.vhd
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/new/FlagRegister.vhd
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/lab2_code_for_cadets/TWICtl.vhd
+  C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/new/Trigger1.vhd
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/new/VGA.vhd
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/new/WrAddrMux.vhd
+  C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383/button_debounce.vhdl
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/new/counter1.vhd
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/ece383-lab1.srcs/sources_1/imports/lab1_cadet_code/dvid.vhdl
   C:/Users/Grantham.Zimmerman/Desktop/ece383/Lab2/Lab2.srcs/sources_1/imports/lab2_code_for_cadets/i2s_ctl.vhd

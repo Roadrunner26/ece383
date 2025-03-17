@@ -1,13 +1,14 @@
 ----------------------------------------------------------------------------------
--- Name:	Template by George York (modified from Jeff Falkinburg)
--- Date:	Spring 2023
+-- Name:	Grantham Zimmerman
+-- Date:	Spring 2025
 -- File:    lab2_datapath.vhdl
 -- HW:	    Lab 2 
--- Pupr:	Lab 2 Datapath takes the blue audio jack input using the National 
--- 		Semiconductor LM450 AC'97 multi-channel audio codec and translates it 
---			for storage in BRAM and display on the oscope display.  
+-- Pupr:	Lab 2 datapath for data writing and displaying on the HDMI Monitor.  
 --
--- Doc:	Adapted from Dr Coulston's Lab exercise
+-- Doc:	Sam Quick and I unsuccessfully verbally talked about trigger logic, reset logic, and worked on the datapath to see 
+--if we could successfully get the monitor to show a scroll. This did not work. Lt Col Trimble showed me through a youtube video 
+--how to debug my datapath to get simlive to show up. He also showed me how to deal with my fromADCX signals with a clock process 
+--to ensure triggering showed up correctly.
 -- 	
 -- Academic Integrity Statement: I certify that, while others may have 
 -- assisted me in brain storming, debugging and validating this program, 
@@ -63,21 +64,33 @@ architecture Behavioral of lab2_datapath is
     signal w_wrEnbMux : std_logic;
     signal w_wrAddrMux : std_logic_vector(9 downto 0);
     signal w_DinMuxL, w_DinMuxR : std_logic_vector(15 downto 0);
-    signal btn_up_pressed : std_logic := '0';
-    signal btn_down_pressed : std_logic := '0';
-	signal btn_right_pressed : std_logic := '0';
-	signal btn_left_pressed : std_logic := '0';
 	signal w_Lbus_out, w_Rbus_out : std_logic_vector(15 downto 0);
 	signal w_compareGL, w_compareGR, w_compareLL, w_compareLR : std_logic;
 	signal nreset_n : std_logic;
 	signal PLbus_out, PRbus_out: std_logic_vector(15 downto 0);
 	signal UnLeftCur, UnRightCur, UnLeftPrev, UnRightPrev : unsigned(9 downto 0) := to_unsigned(0,10);
     signal readyTrigger, readyCompare, readyReady : std_logic;
+    signal btn_up_pressed : std_logic := '0';
+    signal btn_down_pressed : std_logic := '0';
+	signal btn_right_pressed : std_logic := '0';
+	signal btn_left_pressed : std_logic := '0';
     
     constant offset : unsigned(9 downto 0) := to_unsigned(92, 10);
     
-    
-    
+component Trigger is
+    generic(
+        UpperEdge : integer;
+        LowerEdge : integer;
+        start : integer
+    );
+    port(
+        clk : in std_logic;
+        reset_n : in std_logic;
+        firstBtn : in std_logic;
+        secondBtn : in std_logic;
+        outTrigger : out unsigned (9 downto 0)
+    );
+end component;
     
 component WrAddrMux is
     port(
@@ -177,48 +190,11 @@ begin
     port map(
         Q => Q,
         clear => flagClear,
-        flagQ => OPEN,
+        flagQ => flagQ,
         clk => clk,
         set => readyReady,
         reset_n => reset_n
     );
-	
-    process(clk)
-    begin
-        if(rising_edge(clk)) then
-            if(reset_n = '0') then
-                triggerTime <= "0101000000";
-				triggerVolt <= "0011001000";
-		    else
-                if(btn(0) = '1' and btn_up_pressed = '0') then
-                    btn_up_pressed <= '1';
-                    triggerVolt <= triggerVolt - 4;
-                elsif(btn(2) = '1' and btn_down_pressed = '0') then
-                    btn_down_pressed <= '1';
-                    triggerVolt <= triggerVolt + 4;
-                end if;
-                if(btn(1) = '1' and btn_left_pressed = '0') then
-                    btn_left_pressed <= '1';
-                    triggerTime <= triggerTime - 4;
-                elsif(btn(3) = '1' and btn_right_pressed = '0') then
-                    btn_right_pressed <= '1';
-                    triggerTime <= triggerTime + 4;
-                end if;
-                if(btn(0) = '0') then
-                    btn_up_pressed <= '0';
-                end if;
-                if(btn(2) = '0') then
-                    btn_down_pressed <= '0';
-                end if;
-                if(btn(1) = '0') then
-                    btn_left_pressed <= '0';
-                end if;
-                if(btn(3) = '0') then
-                    btn_right_pressed <= '0';
-                end if;
-            end if;
-        end if;
-    end process;
 
     
     ENBMUX : wrEnbMux
@@ -258,7 +234,42 @@ begin
 	   end if;
     end process;
 	
-
+    process(clk)
+    begin
+        if(rising_edge(clk)) then
+            if(reset_n = '0') then
+                triggerTime <= "0101000000";
+				triggerVolt <= "0011001000";
+		    else
+                if(btn(0) = '1' and btn_up_pressed = '0') then
+                    btn_up_pressed <= '1';
+                    triggerVolt <= triggerVolt - 1;
+                elsif(btn(2) = '1' and btn_down_pressed = '0') then
+                    btn_down_pressed <= '1';
+                    triggerVolt <= triggerVolt + 1;
+                end if;
+                if(btn(1) = '1' and btn_left_pressed = '0') then
+                    btn_left_pressed <= '1';
+                    triggerTime <= triggerTime - 1;
+                elsif(btn(3) = '1' and btn_right_pressed = '0') then
+                    btn_right_pressed <= '1';
+                    triggerTime <= triggerTime + 1;
+                end if;
+                if(btn(0) = '0') then
+                    btn_up_pressed <= '0';
+                end if;
+                if(btn(2) = '0') then
+                    btn_down_pressed <= '0';
+                end if;
+                if(btn(1) = '0') then
+                    btn_left_pressed <= '0';
+                end if;
+                if(btn(3) = '0') then
+                    btn_right_pressed <= '0';
+                end if;
+            end if;
+        end if;
+    end process;
 
 -----------------------------------------------------------------------------------------
 --Trigger Logic : A positive trigger cross happens when the previous value is less than

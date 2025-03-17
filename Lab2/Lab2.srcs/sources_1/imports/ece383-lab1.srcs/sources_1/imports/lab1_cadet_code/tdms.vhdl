@@ -1,11 +1,21 @@
 ----------------------------------------------------------------------------------
--- Engineer: Mike Field <hamster@snap.net.nz>
--- 
--- Description: TDMS Encoder 
---     8 bits colour, 2 control bits and one blanking bits in
---       10 bits of TDMS encoded data out
---     Clocked at the pixel clock
+-- Name:	Grantham Zimmerman
+-- Date:	Spring 2025
+-- File:    tdms.vhdl
+-- HW:	    Lab 1
+-- Pupr:	Lab 1 output for HDMI.
 --
+-- Doc:	Sam Quick and I unsuccessfully verbally talked about trigger logic, reset logic, and worked on the datapath to see 
+--if we could successfully get the monitor to show a scroll. This did not work. Lt Col Trimble showed me through a youtube video 
+--how to debug my datapath to get simlive to show up. He also showed me how to deal with my fromADCX signals with a clock process 
+--to ensure triggering showed up correctly.
+-- 	
+-- Academic Integrity Statement: I certify that, while others may have 
+-- assisted me in brain storming, debugging and validating this program, 
+-- the program itself is my own work. I understand that submitting code 
+-- which is the work of other individuals is a violation of the honor   
+-- code.  I also understand that if I knowingly give my original work to 
+-- another individual is also a violation of the honor code. 
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;

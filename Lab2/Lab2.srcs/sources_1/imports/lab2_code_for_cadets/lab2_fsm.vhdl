@@ -1,11 +1,14 @@
 ----------------------------------------------------------------------------------
--- Name:	Template by George your (modified from Jeff Falkinburg)
--- Date:	Spring 2023
+-- Name:	Grantham Zimmerman
+-- Date:	Spring 2025
 -- File:    lab2_fsm.vhd
 -- HW:	    Lab 2 
 -- Pupr:	Lab 2 Finite State Machine for the write circuitry.  
 --
--- Doc:	Adapted from Dr Coulston's Lab exercise
+-- Doc:	Sam Quick and I unsuccessfully verbally talked about trigger logic, reset logic, and worked on the datapath to see 
+--if we could successfully get the monitor to show a scroll. This did not work. Lt Col Trimble showed me through a youtube video 
+--how to debug my datapath to get simlive to show up. He also showed me how to deal with my fromADCX signals with a clock process 
+--to ensure triggering showed up correctly.
 -- 	
 -- Academic Integrity Statement: I certify that, while others may have 
 -- assisted me in brain storming, debugging and validating this program, 
