@@ -156,9 +156,14 @@ Live data didn’t work and the screen didn’t scroll when the compare statemen
 I could not get the debounce to work in time to submit this lab. I tried implementing the debounce file in both the datapath, the top file, and inside a separate trigger component, but it appeared that my buttons would cycle because the input was not communicating with the debouncer.
 
 Gate Check 1			2/11/2025	Fully achieved via teams demo.
+
 Gate Check 2			2/15/2025	Fully achieved via teams demo.
+
 Gate Check 3			3/13/2025	Fully achieved via in class demo.
+
 Required Functionality 	3/13/2025	Fully achieved via in class demo.
+
 B Level Functionality		3/13/2025	Fully achieved via in class demo.
+
 A Level Functionality		3/13/2025	partially achieved via in class demo. Debouncing buttons do not work.
  
