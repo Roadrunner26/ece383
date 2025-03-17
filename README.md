@@ -119,35 +119,64 @@ Lab 2 Datapath:
 	Inputs: clk, reset_n, ctrl, ac_adc_sdata(in), scl, sda, sim_live, exWrAddr, exWen, exSel, ch1_enable, ch2_enable, flagClear, exRBus, exLBus, cw(2 downto 0)
 	Outputs: ac_bclk, ac_lrclk, scl, sda, ac_mclk, sw(2 downto 0), L_Bus_Out, R_Bus_Out, tr_volt, tr_time, flagQ, tmds, tmdsb, ac_dac_sdata(out)
 	Behavior: Takes in control words and switches on the clock cycle and directs the Audio Codec Wrapper and BRAM to write data to the monitor. It can either use internal or external data that is flipped on by a switch, denoted by sim_live. Additionally, can turn on or off channels and change the trigger voltage or trigger time that the data triggers on. Provides a status word to the FSM (Control Unit) that determines the next state.
+ 
 Lab 2 Control Unit:
+
 	Purpose: Responsible for directing the datapath to cycle through different states based on a control word output.
+ 
 	Inputs: clk, reset_n, sw(2 downto 0).
+ 
 	Outputs: cw(2 downto 0).
+ 
 	Behavior: Provides a control word to the datapath based on the current state and the input (the status word).
+ 
 Flag Register:
+
 	Purpose: Provides a way for the top module to see when readyReady (sw(1)) is set.
+ 
 	Inputs: clk, reset_n, readyReady, flagClear.
+ 
 	Outputs: flagQ
+ 
 	Behavior: When readyReady is set on the clock edge, flagQ gets 1, when flagClear is set, flagQ gets 0.
+ 
 wrAddrMux:
+
 	Purpose: Provide an address to the BRAM.
+ 
 	Inputs: exSel (select bit), writeCntr, exWrAddr
+ 
 	Outputs: w_wrAddrMux
+ 
 	Behavior: sets w_wrAddrMux to writeCntr when exSel (switch(2)) is 1, exWrAddr when exSel is 0.
+ 
 DinMux (Left and Right):
+
 	Purpose: Provide data in to the left and right BRAMs to display onto the HDMI monitor.
+ 
 	Inputs: ExXBus, w_Xbus_out, exSel (select bit)
+ 
 	Outputs: w_DinMuxX
+ 
 	Behavior: w_DinMuxX gets exLBus when exSel is 1, w_Xbus_out when exSel is 0.
+ 
 Memory Counter:
+
 	Purpose: increment memory addresses to provide to the WrAddrMux.
+ 
 	Inputs: cw(1:0)
+ 
 	Outputs: writeCntr
+ 
 	Behavior: every clock cycle, it reads the control word and either resets, increments, or holds the current value.
+ 
 wrEnbMux:
 	Purpose: Provides the enable bit to the BRAM
+ 
 	Inputs: cw(2), exWen, exSel (select bit)
+ 
 	Outputs: w_wrEnbMux
+ 
 	Behavior: w_wrEnbMux gets exWen when exSel is 1, cw(2) when 0.
 
 
