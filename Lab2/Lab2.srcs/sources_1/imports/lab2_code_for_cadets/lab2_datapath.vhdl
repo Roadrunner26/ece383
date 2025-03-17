@@ -76,22 +76,7 @@ architecture Behavioral of lab2_datapath is
 	signal btn_left_pressed : std_logic := '0';
     
     constant offset : unsigned(9 downto 0) := to_unsigned(92, 10);
-    
-component Trigger is
-    generic(
-        UpperEdge : integer;
-        LowerEdge : integer;
-        start : integer
-    );
-    port(
-        clk : in std_logic;
-        reset_n : in std_logic;
-        firstBtn : in std_logic;
-        secondBtn : in std_logic;
-        outTrigger : out unsigned (9 downto 0)
-    );
-end component;
-    
+
 component WrAddrMux is
     port(
         clk : in std_logic;
