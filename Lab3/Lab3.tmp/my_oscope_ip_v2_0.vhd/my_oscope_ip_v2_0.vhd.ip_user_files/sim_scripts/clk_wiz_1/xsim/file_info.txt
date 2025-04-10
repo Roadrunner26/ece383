@@ -1,0 +1,2 @@
+clk_wiz_1_sim_netlist.vhdl,vhdl,xil_defaultlib,../../../../../../../ip_repo/My_Counter_IP9_1_0/src/clk_wiz_1/clk_wiz_1_sim_netlist.vhdl,incdir="../../../../../../../ip_repo/My_Counter_IP9_1_0/src/clk_wiz_1"
+glbl.v,Verilog,xil_defaultlib,glbl.v

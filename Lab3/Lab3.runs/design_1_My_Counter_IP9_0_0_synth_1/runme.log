@@ -1,0 +1,45 @@
+
+*** Running vivado
+    with args -log design_1_My_Counter_IP9_0_0.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_My_Counter_IP9_0_0.tcl
+
+
+
+****** Vivado v2024.2 (64-bit)
+  **** SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
+  **** IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
+  **** SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
+  **** Start of session at: Thu Apr 10 08:54:02 2025
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source design_1_My_Counter_IP9_0_0.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/Grantham.Zimmerman/Desktop/ece383/ip_repo/My_Counter_IP9_1_0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/Users/Grantham.Zimmerman/Desktop/ece383/ip_repo/My_Counter_IP8_1_0'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx2/Vivado/2024.2/data/ip'.
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: design_1_My_Counter_IP9_0_0
+Command: synth_design -top design_1_My_Counter_IP9_0_0 -part xc7a200tsbg484-1 -incremental_mode off -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a200t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a200t'
+INFO: [Device 21-403] Loading part xc7a200tsbg484-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 17528
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:15 . Memory (MB): peak = 1010.914 ; gain = 467.938
+---------------------------------------------------------------------------------
+ERROR: [Synth 8-8892] 'cw' is already declared in this region [c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab3/Lab3.gen/sources_1/bd/design_1/ipshared/7a51/hdl/My_Counter_IP9_slave_lite_v1_0_S00_AXI.vhd:166]
+ERROR: [Synth 8-8892] 'sw' is already declared in this region [c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab3/Lab3.gen/sources_1/bd/design_1/ipshared/7a51/hdl/My_Counter_IP9_slave_lite_v1_0_S00_AXI.vhd:167]
+INFO: [Synth 8-11252] unit 'arch_imp' is ignored due to previous errors [c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab3/Lab3.gen/sources_1/bd/design_1/ipshared/7a51/hdl/My_Counter_IP9_slave_lite_v1_0_S00_AXI.vhd:755]
+INFO: [Synth 8-10443] VHDL file 'c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab3/Lab3.gen/sources_1/bd/design_1/ipshared/7a51/hdl/My_Counter_IP9_slave_lite_v1_0_S00_AXI.vhd' is ignored due to errors
+ERROR: [Synth 8-12189] Failed to read vhdl 'c:/Users/Grantham.Zimmerman/Desktop/ece383/Lab3/Lab3.gen/sources_1/bd/design_1/ipshared/7a51/hdl/My_Counter_IP9_slave_lite_v1_0_S00_AXI.vhd'
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:12 ; elapsed = 00:00:18 . Memory (MB): peak = 1115.422 ; gain = 572.445
+---------------------------------------------------------------------------------
+RTL Elaboration failed
+INFO: [Common 17-83] Releasing license: Synthesis
+13 Infos, 0 Warnings, 0 Critical Warnings and 4 Errors encountered.
+synth_design failed
+ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
+INFO: [Common 17-206] Exiting Vivado at Thu Apr 10 08:55:04 2025...

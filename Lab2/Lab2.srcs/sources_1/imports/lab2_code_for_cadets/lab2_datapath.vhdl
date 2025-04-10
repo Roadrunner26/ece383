@@ -273,10 +273,8 @@ begin
                 UnRightCur <= to_unsigned(0, 10);
                 UnRightPrev <= UnRightCur;
             else
-                if(readyReady = '1') then
-                    UnRightPrev <= UnRightCur;
-                    UnRightCur <= (unsigned("00" & w_Rbus_out(15 downto 8))) + offset;
-                end if;
+                UnRightPrev <= UnRightCur;
+                UnRightCur <= (unsigned("00" & w_Rbus_out(15 downto 8))) + offset;
            end if;
        end if;
    end process;
@@ -295,13 +293,9 @@ begin
 		end if;
 	end process;
 	
-	process(clk)
-	   begin
-	   if(rising_edge(clk)) then
-	       Lbus_out <= w_Lbus_out;
-	       Rbus_out <= w_Rbus_out;
-	       end if;
-	   end process;
+       Lbus_out <= w_Lbus_out;
+       Rbus_out <= w_Rbus_out;
+
                 
     CntrMux : WrAddrMux
 	   port map(
@@ -564,3 +558,5 @@ Audio_Codec : Audio_Codec_Wrapper
     sw(2) <= readyTrigger;
 
 end Behavioral;
+
+
