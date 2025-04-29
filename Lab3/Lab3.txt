@@ -1,0 +1,307 @@
+#include <stdint.h>
+#include "xparameters.h"
+#include "stdio.h"
+#include "xstatus.h"
+#include "platform.h"
+#include "xil_printf.h"
+#include <xuartlite_l.h>
+#include <xil_io.h>
+#include <xil_exception.h>
+#include <stdbool.h>
+
+/* PCORE register indices */
+#define countBase       0x44a00000
+#define SLV_REG(X)      (countBase + 4*(X))
+#define exWrAddr        4
+#define LBus_Out		5
+#define RBus_Out		6
+#define exWen           7
+#define exLBus          8
+#define exRBus          9
+#define flagClear       11
+#define flagQ_ready     12
+#define trig_volt		13
+#define trig_time		14
+#define uartRegAddr		0x40600000
+
+#define BUFFER_LEN      1024
+#define printf xil_printf
+
+/* Globals for buffer & trigger logic */
+volatile uint16_t array_L[BUFFER_LEN];
+volatile uint16_t array_R[BUFFER_LEN];
+volatile int      sample_index = 0;
+volatile bool     buffer_full   = false;
+volatile int      trig_location    = 0;
+
+/* ISR prototype */
+void myISR(void);
+
+uint16_t toUnsigned(uint16_t signNum);
+
+u16 trigAdj(u16 unAdjTrig);
+
+void clearFlag(void);
+
+void writeBRAM(void);
+
+
+u16 offset = 92;
+
+
+/*--------------------------------------------------------------
+ * main()
+ *------------------------------------------------------------*/
+int main(void) {
+    unsigned char input;
+    int  i;
+
+    init_platform();
+    xil_printf("Lab3\n\r");
+
+    /* if you plan to use interrupts: */
+    microblaze_register_handler((XInterruptHandler)myISR, (void *)0);
+    microblaze_enable_interrupts();
+
+    u16 sinFunc[64] = {128,141,153,165,177,189,200,210,219,227,235,241,246,250,253,255,
+    255,254,252,248,244,238,231,223,214,205,194,183,171,159,147,134,
+    122,109, 97, 85, 73, 62, 51, 42, 33, 25, 18, 12,  8,  4,  2,  1,
+    1,  3,  6, 10, 15, 21, 29, 37, 46, 56, 67, 79, 91,103,115,128};
+
+    /* clear PCORE ready flag initially */
+    clearFlag();
+
+    while (1) {
+    	if(!XUartLite_IsReceiveEmpty(uartRegAddr)){
+
+    		input = XUartLite_RecvByte(uartRegAddr);
+
+    		switch (input) {
+				case '?':
+					printf("--------------------------\r\n");
+					printf("	Trigger Volt: %d\r\n",Xil_In16(SLV_REG(trig_volt)));
+					printf("	Trigger Time: %d\r\n",Xil_In16(SLV_REG(trig_time)));
+					printf("	lBusOut: %d\r\n",Xil_In16(SLV_REG(LBus_Out)));
+					printf("	rBusOut: %d\r\n",Xil_In16(SLV_REG(RBus_Out)));
+					Xil_Out8(SLV_REG(flagQ_ready), 1);
+					printf("	flagQReady: set %d\r\n",Xil_In16(SLV_REG(flagQ_ready)));
+					Xil_Out8(SLV_REG(flagQ_ready), 0);
+					printf("	flagQReady: clear %d\r\n",Xil_In16(SLV_REG(flagQ_ready)));
+					printf("	exWrAddr: %d\r\n",Xil_In16(SLV_REG(exWrAddr)));
+					printf("	exWen: %d\r\n",Xil_In16(SLV_REG(exWen)));
+					printf("	flagClear: %d\r\n\n",Xil_In16(SLV_REG(flagClear)));
+					printf("--------------------------\r\n");
+					break;
+
+				case 'd':
+					for (i = 0; i < BUFFER_LEN; i++) {
+						Xil_Out16(SLV_REG(exWrAddr), (u16)i);
+						Xil_Out16(SLV_REG(exLBus),   185);
+						Xil_Out16(SLV_REG(exRBus),   (s16)(i - 320));
+						Xil_Out16(SLV_REG(exWen),    1);
+						Xil_Out16(SLV_REG(exWen),    0);
+					}
+					break;
+
+				case 'e':
+					for (i = 0; i < BUFFER_LEN; i++) {
+						Xil_Out16(SLV_REG(exWrAddr), (u16)i);
+						Xil_Out16(SLV_REG(exLBus),   sinFunc[i % 64]);
+						Xil_Out16(SLV_REG(exRBus),   sinFunc[(i + 256) % 64]);
+						Xil_Out16(SLV_REG(exWen),    1);
+						Xil_Out16(SLV_REG(exWen),    0);
+					}
+					break;
+
+				case 'm':
+					microblaze_disable_interrupts();
+					for (i = 0; i < BUFFER_LEN; i++) {
+						while ((Xil_In16(SLV_REG(flagQ_ready)) & 0x1) == 0) { }
+						array_L[i] = Xil_In16(SLV_REG(exLBus));
+						array_R[i] = Xil_In16(SLV_REG(exRBus));
+						clearFlag();
+					}
+					microblaze_enable_interrupts();
+					break;
+
+				case 'p':
+					for (i = 0; i < BUFFER_LEN; i++) {
+						xil_printf("%04x\r\n", array_L[i]);
+					}
+					break;
+
+				case 'w':
+					for (i = 0; i < BUFFER_LEN; i++) {
+						Xil_Out16(SLV_REG(exLBus),   array_L[i]);
+						Xil_Out16(SLV_REG(exWrAddr), (u16)i);
+						Xil_Out8 (SLV_REG(exWen),    1);
+						Xil_Out8 (SLV_REG(exWen),    0);
+					}
+					break;
+
+				case 't':
+					for (i = 1; i < BUFFER_LEN; i++) {
+						if (array_L[i] > SLV_REG(trig_volt) && array_L[i-1] < SLV_REG(trig_volt)) {
+							xil_printf("%d\r\n", i);
+							trig_location = i;
+							break;
+						}
+					}
+					break;
+
+				case 'z': {
+					for (i = 0; i < BUFFER_LEN; i++) {
+						int idx = (trig_location + i) % BUFFER_LEN;
+						Xil_Out16(SLV_REG(exLBus),   array_L[idx]);
+						Xil_Out16(SLV_REG(exWrAddr), (u16)i);
+						Xil_Out8 (SLV_REG(exWen),     1);
+						Xil_Out8 (SLV_REG(exWen),     0);
+					}
+				} break;
+
+				case 'g': {
+					/* continuous polling + trigger + display */
+					microblaze_disable_interrupts();
+					while (1) {
+						/* fill & detect trigger */
+						for (i = 0; i < BUFFER_LEN; i++) {
+							while ((Xil_In16(SLV_REG(flagQ_ready)) & 0x1) == 0) { }
+							array_L[i] = Xil_In16(SLV_REG(exLBus));
+							array_R[i] = Xil_In16(SLV_REG(exRBus));
+							clearFlag();
+							if (i>0 && array_L[i]>SLV_REG(trig_volt) && array_L[i-1]<SLV_REG(trig_volt)) {
+								trig_location = i;
+								break;
+							}
+						}
+						/* display */
+						for (int j = 0; j < BUFFER_LEN; j++) {
+							int idx = (trig_location + j) % BUFFER_LEN;
+							Xil_Out16(SLV_REG(exLBus),   array_L[idx]);
+							Xil_Out16(SLV_REG(exWrAddr), (u16)j);
+							Xil_Out16(SLV_REG(exWen),     1);
+							Xil_Out16(SLV_REG(exWen),     0);
+						}
+					}
+				} break;
+
+				case 'i': {
+					/* one-shot interrupt capture + trigger + display */
+					buffer_full  = false;
+					sample_index = 0;
+
+					microblaze_enable_interrupts();
+					clearFlag();
+
+					while (!buffer_full) { }
+					microblaze_disable_interrupts();
+
+					for (i = 1; i < BUFFER_LEN; i++) {
+						if (array_L[i] > trig_volt && array_L[i-1] < trig_volt) {
+							trig_location = i;
+							break;
+						}
+					}
+					/* write out */
+					for (int j = 0; j < BUFFER_LEN; j++) {
+						int idx = (trig_location + j) % BUFFER_LEN;
+						Xil_Out16(SLV_REG(exLBus),   array_L[idx]);
+						Xil_Out16(SLV_REG(exWrAddr), (u16)j);
+						Xil_Out8 (SLV_REG(exWen),     1);
+						Xil_Out8 (SLV_REG(exWen),     0);
+					}
+				} break;
+
+				case 'c': {
+					printf("Continuous case 'c'.\r\n");
+					writeBRAM();
+					break;
+				}
+
+				default:
+					xil_printf("Unrecognized: %c\r\n", input);
+					break;
+				}
+			}
+    		if(buffer_full == true){
+    			writeBRAM();
+    		}
+    	}
+    cleanup_platform();
+	return 0;
+
+
+}
+
+uint16_t toUnsigned(uint16_t signNum){
+	uint16_t unsignNum = signNum ^ 0x8000;
+	return unsignNum;
+}
+/*--------------------------------------------------------------
+ * Interrupt Service Routine
+ *------------------------------------------------------------*/
+
+//Step 1 From Lt Col Trimble's diagram.
+void myISR(void) {
+	xil_printf("ISR fired, sample_index = %d\r\n", sample_index);
+	if(buffer_full == false){
+		if(sample_index < BUFFER_LEN){
+			array_L[sample_index] = toUnsigned(Xil_In16(SLV_REG(exLBus)));
+			array_R[sample_index] = toUnsigned(Xil_In16(SLV_REG(exRBus)));
+			sample_index++;
+		}
+
+		if (sample_index >= BUFFER_LEN) {
+			buffer_full = true;
+			sample_index = 0;
+		}
+		clearFlag();
+	}
+}
+
+u16 trigAdj(u16 unAdjTrig){
+	return (unAdjTrig >> 6) + offset;
+}
+
+void clearFlag(void){
+	Xil_Out8(SLV_REG(flagClear), 1);
+	Xil_Out8(SLV_REG(flagClear), 0);
+}
+
+void writeBRAM(void){
+	microblaze_disable_interrupts();
+	//Step Two: Get Trigger Time
+	int trigTime = Xil_In16(SLV_REG(trig_time));
+	int trigVolt = Xil_In16(SLV_REG(trig_volt));
+
+	//Step Three: Look in Array Starting at Trigger Time - 20 until it crosses Trigger Volt.
+	for(int i = trigTime - 20; i < BUFFER_LEN; i++){
+		if(trigAdj(array_L[i]) <= trigVolt && trigAdj(array_L[i - 1]) > trigVolt){
+			trig_location = i;
+			break;
+		}
+	}
+
+	//startIdx = trigloc - trig_time
+	int startIdx = trig_location - trigTime;
+	if(startIdx < 0){
+		startIdx = 0;
+	}
+
+	//Step Four: Fill BRAM 20-620 with Array_L[trigloc - trigTime to trigloc + 600 - trigTime]
+	for(int j = startIdx; j < (startIdx + 600); j++){
+		int idx = startIdx + j;
+		if(idx >= BUFFER_LEN){
+			idx = 0;
+		}
+		Xil_Out16(SLV_REG(exWrAddr), j);
+		Xil_Out16(SLV_REG(exLBus), array_L[idx]);
+		Xil_Out16(SLV_REG(exRBus), array_R[idx]);
+		Xil_Out8 (SLV_REG(exWen), 1);
+		Xil_Out8 (SLV_REG(exWen), 0);
+
+	}
+	//Step Five: Start Over.
+	buffer_full = false;
+	microblaze_enable_interrupts();
+}

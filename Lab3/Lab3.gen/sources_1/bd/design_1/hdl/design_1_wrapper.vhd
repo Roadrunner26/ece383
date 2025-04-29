@@ -2,7 +2,7 @@
 --Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
---Date        : Thu Apr 10 08:53:26 2025
+--Date        : Tue Apr 29 12:39:04 2025
 --Host        : C26-5CG2151LB4 running 64-bit major release  (build 9200)
 --Command     : generate_target design_1_wrapper.bd
 --Design      : design_1_wrapper
@@ -29,10 +29,19 @@ entity design_1_wrapper is
     DDR3_0_reset_n : out STD_LOGIC;
     DDR3_0_we_n : out STD_LOGIC;
     LED : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    ac_adc_sdata : in STD_LOGIC;
+    ac_bclk : out STD_LOGIC;
+    ac_dac_sdata : out STD_LOGIC;
+    ac_lrclk : out STD_LOGIC;
+    ac_mclk : out STD_LOGIC;
+    btn : in STD_LOGIC_VECTOR ( 4 downto 0 );
     reset : in STD_LOGIC;
+    scl : inout STD_LOGIC;
+    sda : inout STD_LOGIC;
+    switch : in STD_LOGIC_VECTOR ( 3 downto 0 );
     sys_clock : in STD_LOGIC;
-    usb_uart_0_rxd : in STD_LOGIC;
-    usb_uart_0_txd : out STD_LOGIC;
+    tmds : out STD_LOGIC_VECTOR ( 3 downto 0 );
+    tmdsb : out STD_LOGIC_VECTOR ( 3 downto 0 );
     usb_uart_rxd : in STD_LOGIC;
     usb_uart_txd : out STD_LOGIC
   );
@@ -60,8 +69,17 @@ architecture STRUCTURE of design_1_wrapper is
     reset : in STD_LOGIC;
     sys_clock : in STD_LOGIC;
     LED : out STD_LOGIC_VECTOR ( 7 downto 0 );
-    usb_uart_0_rxd : in STD_LOGIC;
-    usb_uart_0_txd : out STD_LOGIC
+    btn : in STD_LOGIC_VECTOR ( 4 downto 0 );
+    switch : in STD_LOGIC_VECTOR ( 3 downto 0 );
+    ac_mclk : out STD_LOGIC;
+    ac_dac_sdata : out STD_LOGIC;
+    ac_bclk : out STD_LOGIC;
+    ac_lrclk : out STD_LOGIC;
+    scl : inout STD_LOGIC;
+    sda : inout STD_LOGIC;
+    tmds : out STD_LOGIC_VECTOR ( 3 downto 0 );
+    tmdsb : out STD_LOGIC_VECTOR ( 3 downto 0 );
+    ac_adc_sdata : in STD_LOGIC
   );
   end component design_1;
 begin
@@ -82,10 +100,19 @@ design_1_i: component design_1
       DDR3_0_reset_n => DDR3_0_reset_n,
       DDR3_0_we_n => DDR3_0_we_n,
       LED(7 downto 0) => LED(7 downto 0),
+      ac_adc_sdata => ac_adc_sdata,
+      ac_bclk => ac_bclk,
+      ac_dac_sdata => ac_dac_sdata,
+      ac_lrclk => ac_lrclk,
+      ac_mclk => ac_mclk,
+      btn(4 downto 0) => btn(4 downto 0),
       reset => reset,
+      scl => scl,
+      sda => sda,
+      switch(3 downto 0) => switch(3 downto 0),
       sys_clock => sys_clock,
-      usb_uart_0_rxd => usb_uart_0_rxd,
-      usb_uart_0_txd => usb_uart_0_txd,
+      tmds(3 downto 0) => tmds(3 downto 0),
+      tmdsb(3 downto 0) => tmdsb(3 downto 0),
       usb_uart_rxd => usb_uart_rxd,
       usb_uart_txd => usb_uart_txd
     );

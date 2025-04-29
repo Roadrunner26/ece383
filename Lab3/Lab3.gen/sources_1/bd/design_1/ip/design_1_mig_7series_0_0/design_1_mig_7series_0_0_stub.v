@@ -2,10 +2,10 @@
 // Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-// Date        : Fri Feb 28 08:40:21 2025
+// Date        : Thu Apr 10 14:44:36 2025
 // Host        : C26-5CG2151LB4 running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
-//               c:/Users/Grantham.Zimmerman/Desktop/ece383/ublaze1/ublaze1.gen/sources_1/bd/design_1/ip/design_1_mig_7series_0_0/design_1_mig_7series_0_0_stub.v
+//               c:/ece383/Lab3/Lab3.gen/sources_1/bd/design_1/ip/design_1_mig_7series_0_0/design_1_mig_7series_0_0_stub.v
 // Design      : design_1_mig_7series_0_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a200tsbg484-1

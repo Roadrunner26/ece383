@@ -25,8 +25,17 @@ module design_1 (
   reset,
   sys_clock,
   LED,
-  usb_uart_0_rxd,
-  usb_uart_0_txd
+  btn,
+  switch,
+  ac_mclk,
+  ac_dac_sdata,
+  ac_bclk,
+  ac_lrclk,
+  scl,
+  sda,
+  tmds,
+  tmdsb,
+  ac_adc_sdata
 );
 
   (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 usb_uart RxD" *)
@@ -74,11 +83,28 @@ module design_1 (
   input sys_clock;
   (* X_INTERFACE_IGNORE = "true" *)
   output [7:0]LED;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 usb_uart_0 RxD" *)
-  (* X_INTERFACE_MODE = "master usb_uart_0" *)
-  input usb_uart_0_rxd;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 usb_uart_0 TxD" *)
-  output usb_uart_0_txd;
+  (* X_INTERFACE_IGNORE = "true" *)
+  input [4:0]btn;
+  (* X_INTERFACE_IGNORE = "true" *)
+  input [3:0]switch;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output ac_mclk;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output ac_dac_sdata;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output ac_bclk;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output ac_lrclk;
+  (* X_INTERFACE_IGNORE = "true" *)
+  inout scl;
+  (* X_INTERFACE_IGNORE = "true" *)
+  inout sda;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [3:0]tmds;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [3:0]tmdsb;
+  (* X_INTERFACE_IGNORE = "true" *)
+  input ac_adc_sdata;
 
   // stub module has no contents
 

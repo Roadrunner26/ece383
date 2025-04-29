@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x174178DAFBBCBE52",
+      "boundary_crc": "0x9C0A58F3DA8506CE",
       "device": "xc7a200tsbg484-1",
       "gen_directory": "../../../../Lab3.gen/sources_1/bd/design_1",
       "name": "design_1",
@@ -28,8 +28,8 @@
       "util_ds_buf_0": "",
       "axi_smc_1": "",
       "rst_mig_7series_0_100M": "",
-      "My_Counter_IP9_0": "",
-      "axi_uartlite_1": ""
+      "xlslice_0": "",
+      "Lab3Component1_1_0": ""
     },
     "interface_ports": {
       "usb_uart": {
@@ -179,21 +179,6 @@
             "right": "0"
           }
         }
-      },
-      "usb_uart_0": {
-        "mode": "Master",
-        "vlnv_bus_definition": "xilinx.com:interface:uart:1.0",
-        "vlnv": "xilinx.com:interface:uart_rtl:1.0",
-        "port_maps": {
-          "RxD": {
-            "physical_name": "usb_uart_0_rxd",
-            "direction": "I"
-          },
-          "TxD": {
-            "physical_name": "usb_uart_0_txd",
-            "direction": "O"
-          }
-        }
       }
     },
     "ports": {
@@ -238,6 +223,47 @@
         "direction": "O",
         "left": "7",
         "right": "0"
+      },
+      "btn": {
+        "direction": "I",
+        "left": "4",
+        "right": "0"
+      },
+      "switch": {
+        "direction": "I",
+        "left": "3",
+        "right": "0"
+      },
+      "ac_mclk": {
+        "direction": "O"
+      },
+      "ac_dac_sdata": {
+        "direction": "O"
+      },
+      "ac_bclk": {
+        "direction": "O"
+      },
+      "ac_lrclk": {
+        "direction": "O"
+      },
+      "scl": {
+        "direction": "IO"
+      },
+      "sda": {
+        "direction": "IO"
+      },
+      "tmds": {
+        "direction": "O",
+        "left": "3",
+        "right": "0"
+      },
+      "tmdsb": {
+        "direction": "O",
+        "left": "3",
+        "right": "0"
+      },
+      "ac_adc_sdata": {
+        "direction": "I"
       }
     },
     "components": {
@@ -831,27 +857,30 @@
         "xci_path": "ip\\design_1_rst_mig_7series_0_100M_0\\design_1_rst_mig_7series_0_100M_0.xci",
         "inst_hier_path": "rst_mig_7series_0_100M"
       },
-      "My_Counter_IP9_0": {
-        "vlnv": "xilinx.com:user:My_Counter_IP9:1.0",
-        "ip_revision": "2",
-        "xci_name": "design_1_My_Counter_IP9_0_0",
-        "xci_path": "ip\\design_1_My_Counter_IP9_0_0\\design_1_My_Counter_IP9_0_0.xci",
-        "inst_hier_path": "My_Counter_IP9_0"
-      },
-      "axi_uartlite_1": {
-        "vlnv": "xilinx.com:ip:axi_uartlite:2.0",
-        "ip_revision": "37",
-        "xci_name": "design_1_axi_uartlite_1_0",
-        "xci_path": "ip\\design_1_axi_uartlite_1_0\\design_1_axi_uartlite_1_0.xci",
-        "inst_hier_path": "axi_uartlite_1",
+      "xlslice_0": {
+        "vlnv": "xilinx.com:ip:xlslice:1.0",
+        "ip_revision": "4",
+        "xci_name": "design_1_xlslice_0_0",
+        "xci_path": "ip\\design_1_xlslice_0_0\\design_1_xlslice_0_0.xci",
+        "inst_hier_path": "xlslice_0",
         "parameters": {
-          "UARTLITE_BOARD_INTERFACE": {
-            "value": "usb_uart"
+          "DIN_FROM": {
+            "value": "2"
           },
-          "USE_BOARD_FLOW": {
-            "value": "true"
+          "DIN_TO": {
+            "value": "2"
+          },
+          "DIN_WIDTH": {
+            "value": "4"
           }
         }
+      },
+      "Lab3Component1_1_0": {
+        "vlnv": "xilinx.com:user:Lab3Component1_1:1.0",
+        "ip_revision": "15",
+        "xci_name": "design_1_Lab3Component1_1_0_2",
+        "xci_path": "ip\\design_1_Lab3Component1_1_0_2\\design_1_Lab3Component1_1_0_2.xci",
+        "inst_hier_path": "Lab3Component1_1_0"
       }
     },
     "interface_nets": {
@@ -870,25 +899,13 @@
       "axi_smc_M01_AXI": {
         "interface_ports": [
           "axi_smc/M01_AXI",
-          "My_Counter_IP9_0/S00_AXI"
-        ]
-      },
-      "axi_smc_M02_AXI": {
-        "interface_ports": [
-          "axi_smc/M02_AXI",
-          "axi_uartlite_1/S_AXI"
+          "Lab3Component1_1_0/S00_AXI"
         ]
       },
       "axi_uartlite_0_UART": {
         "interface_ports": [
           "usb_uart",
           "axi_uartlite_0/UART"
-        ]
-      },
-      "axi_uartlite_1_UART": {
-        "interface_ports": [
-          "usb_uart_0",
-          "axi_uartlite_1/UART"
         ]
       },
       "microblaze_0_M_AXI_DC": {
@@ -935,15 +952,76 @@
       }
     },
     "nets": {
-      "My_Counter_IP9_0_LED": {
+      "Lab3Component1_1_0_LED": {
         "ports": [
-          "My_Counter_IP9_0/LED",
+          "Lab3Component1_1_0/LED",
           "LED"
+        ]
+      },
+      "Lab3Component1_1_0_ac_bclk": {
+        "ports": [
+          "Lab3Component1_1_0/ac_bclk",
+          "ac_bclk"
+        ]
+      },
+      "Lab3Component1_1_0_ac_dac_sdata": {
+        "ports": [
+          "Lab3Component1_1_0/ac_dac_sdata",
+          "ac_dac_sdata"
+        ]
+      },
+      "Lab3Component1_1_0_ac_lrclk": {
+        "ports": [
+          "Lab3Component1_1_0/ac_lrclk",
+          "ac_lrclk"
+        ]
+      },
+      "Lab3Component1_1_0_ac_mclk": {
+        "ports": [
+          "Lab3Component1_1_0/ac_mclk",
+          "ac_mclk"
+        ]
+      },
+      "Lab3Component1_1_0_tmds": {
+        "ports": [
+          "Lab3Component1_1_0/tmds",
+          "tmds"
+        ]
+      },
+      "Lab3Component1_1_0_tmdsb": {
+        "ports": [
+          "Lab3Component1_1_0/tmdsb",
+          "tmdsb"
         ]
       },
       "My_Counter_IP9_0_roll": {
         "ports": [
+          "Lab3Component1_1_0/flagQOut",
           "microblaze_0/Interrupt"
+        ]
+      },
+      "Net": {
+        "ports": [
+          "scl",
+          "Lab3Component1_1_0/scl"
+        ]
+      },
+      "Net1": {
+        "ports": [
+          "sda",
+          "Lab3Component1_1_0/sda"
+        ]
+      },
+      "ac_adc_sdata_0_1": {
+        "ports": [
+          "ac_adc_sdata",
+          "Lab3Component1_1_0/ac_adc_sdata"
+        ]
+      },
+      "btn_1": {
+        "ports": [
+          "btn",
+          "Lab3Component1_1_0/btn"
         ]
       },
       "clk_wiz_1_clk_out2": {
@@ -973,8 +1051,8 @@
           "axi_smc/aclk",
           "axi_uartlite_0/s_axi_aclk",
           "axi_smc_1/aclk",
-          "axi_uartlite_1/s_axi_aclk",
-          "My_Counter_IP9_0/s00_axi_aclk"
+          "Lab3Component1_1_0/s00_axi_aclk",
+          "Lab3Component1_1_0/clk"
         ]
       },
       "mig_7series_0_mmcm_locked": {
@@ -1022,14 +1100,20 @@
           "axi_uartlite_0/s_axi_aresetn",
           "axi_smc/aresetn",
           "axi_smc_1/aresetn",
-          "axi_uartlite_1/s_axi_aresetn",
-          "My_Counter_IP9_0/s00_axi_aresetn"
+          "Lab3Component1_1_0/s00_axi_aresetn"
         ]
       },
       "rst_mig_7series_0_100M_peripheral_aresetn": {
         "ports": [
           "rst_mig_7series_0_100M/peripheral_aresetn",
           "mig_7series_0/aresetn"
+        ]
+      },
+      "switch_0_1": {
+        "ports": [
+          "switch",
+          "xlslice_0/Din",
+          "Lab3Component1_1_0/switch"
         ]
       },
       "sys_clock_1": {
@@ -1044,6 +1128,12 @@
           "mig_7series_0/sys_clk_i",
           "clk_wiz_1/clk_in1"
         ]
+      },
+      "xlslice_0_Dout": {
+        "ports": [
+          "xlslice_0/Dout",
+          "Lab3Component1_1_0/exSel"
+        ]
       }
     },
     "addressing": {
@@ -1051,8 +1141,8 @@
         "address_spaces": {
           "Data": {
             "segments": {
-              "SEG_My_Counter_IP9_0_S00_AXI_reg": {
-                "address_block": "/My_Counter_IP9_0/S00_AXI/S00_AXI_reg",
+              "SEG_Lab3Component1_1_0_S00_AXI_reg": {
+                "address_block": "/Lab3Component1_1_0/S00_AXI/S00_AXI_reg",
                 "offset": "0x44A00000",
                 "range": "64K",
                 "offset_base_param": "C_S00_AXI_BASEADDR",
@@ -1061,11 +1151,6 @@
               "SEG_axi_uartlite_0_Reg": {
                 "address_block": "/axi_uartlite_0/S_AXI/Reg",
                 "offset": "0x40600000",
-                "range": "64K"
-              },
-              "SEG_axi_uartlite_1_Reg": {
-                "address_block": "/axi_uartlite_1/S_AXI/Reg",
-                "offset": "0x40610000",
                 "range": "64K"
               },
               "SEG_dlmb_bram_if_cntlr_Mem": {
