@@ -41,7 +41,6 @@ Overall Behavior:
 
  
 2.3	Calculations/Analysis/Drawings
-![image](https://github.com/user-attachments/assets/ac309c70-6596-4e1e-9b38-be2e55ac368b)
 ![image](https://github.com/user-attachments/assets/1819cf87-41e8-4f98-91c2-c8bb673b1270)
 
  
@@ -52,22 +51,30 @@ Figure Below: Screenshot of python code I used to create my ROM component.
 
 2.5	Milestone 1
 In Milestone 1, I will create a ROM component for my sprite memory and draw it onto the HDMI monitor. I will then create custom hardware to be programmable by the microblaze. I will know if this works fully by visually verifying on the screen that I can draw many different sprites successfully onto the screen in the lanes that they belong in. All tests are visual at this point. I will also use the keyboard to determine if I can successfully pass UART data into the hardware to change the game state.
+
 2.6	Milestone 2
 In milestone two, I will create functional movement of all the cars, create death animation and successfully implement sound. I will include a scoreboard and high scores as well as a game menu.
+
 2.7 	Updated Functionality and Requirements
+
 Required Functionality:
 •	Display a frog and obstacles to a monitor via HDMI in 640x480 pixel resolution.
 •	Pressing a button on the keyboard moves the frog one position along the (x,y) plane.
 •	This level will support 5 lines of traffic and the river of logs.
 Minimum functionality was met by demo day on M40.
+
 3 	Milestone 1
 I have met my deliverable obligations for the first milestone.
+
 4	Milestone 2
 Due to time constraints, I was unable to meet my deliverable obligations for milestone two.
+
 5 	Final Demonstration
 During the final demonstration, I was successfully able to draw cars and logs to the screen as well as move my frog through the UART terminal using keyboard commands.
+
 6	Poster presentation
 I presented my poster to Lt. Col Trimble through a teams video screen recording and sent it to him on teams.
+
 8	Git Repo
 Final Project Repo was pushed to teams on 8 May 2025.
 
