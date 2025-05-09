@@ -1,0 +1,10 @@
+
+
+OPTION psf_version = 2.1;
+
+BEGIN DRIVER frogger1
+	OPTION supported_peripherals = (frogger1);
+	OPTION copyfiles = all;
+	OPTION VERSION = 1.0;
+	OPTION NAME = frogger1;
+END DRIVER

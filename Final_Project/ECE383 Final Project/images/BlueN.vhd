@@ -1,0 +1,13 @@
+type rom_row_type is array (8 downto 0) of std_logic_vector(23 downto 0);
+type rom_type is array (7 downto 0) of rom_row_type;
+
+signal ROM : rom_type := (
+    0 => (X"001E1A", X"74CBC2", X"3C938A", X"002824", X"001B18", X"001812", X"6DBEB7", X"549F9A", X"064846"),
+    1 => (X"002525", X"1A8F86", X"46BEB4", X"56B2B1", X"002929", X"00443E", X"35A79F", X"349995", X"176D6C"),
+    2 => (X"003B45", X"36BBB8", X"1FA6A2", X"47ACB4", X"48A9B2", X"003838", X"3FC1BF", X"3CAFB2", X"005158"),
+    3 => (X"001734", X"34BAC6", X"1DA5B1", X"57B5CF", X"3E98B3", X"47C2D2", X"0A8E9B", X"3DADC1", X"00576B"),
+    4 => (X"002A51", X"33ADC2", X"3AB7CB", X"002347", X"4993B8", X"40B0C8", X"3EB8CD", X"2D92AE", X"0E5C73"),
+    5 => (X"001A3E", X"56B9CC", X"3AA1B2", X"000E2F", X"002042", X"54AFC4", X"298C9F", X"5DADC6", X"0E465D"),
+    6 => (X"000521", X"428C97", X"60AEB8", X"00152D", X"000720", X"003240", X"63ADB8", X"6FA8B9", X"214656"),
+    7 => (X"060F16", X"001913", X"00231C", X"000E12", X"28353B", X"00130F", X"00110B", X"000A09", X"4B5F5E")
+);

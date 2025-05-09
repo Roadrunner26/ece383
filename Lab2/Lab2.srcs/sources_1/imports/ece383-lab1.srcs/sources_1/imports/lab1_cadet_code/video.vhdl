@@ -12,14 +12,16 @@ entity video is
            reset_n : in  STD_LOGIC;
            tmds : out  STD_LOGIC_VECTOR (3 downto 0);
            tmdsb : out  STD_LOGIC_VECTOR (3 downto 0);
-			  trigger_time: in unsigned(9 downto 0);
-			  trigger_volt: in unsigned (9 downto 0);
-			  row: out unsigned(9 downto 0);
-			  column: out unsigned(9 downto 0);
-			  ch1: in std_logic;
-			  ch1_enb: in std_logic;
-			  ch2: in std_logic;
-			  ch2_enb: in std_logic);
+		   lane1X : in unsigned(9 downto 0);
+           lane2X: in unsigned(9 downto 0);
+           lane3X: in unsigned(9 downto 0);
+           lane4X: in unsigned(9 downto 0);
+           frogX: in unsigned(9 downto 0);
+           frogY: in unsigned(9 downto 0);
+           river6X: in unsigned(9 downto 0);
+           river7X: in unsigned(9 downto 0);
+           river8X: in unsigned(9 downto 0);
+           frogType : in integer);
 end video;
 
 architecture structure of video is
@@ -29,24 +31,28 @@ architecture structure of video is
 	signal clock_s, red_s, green_s, blue_s: STD_LOGIC;
 	signal h_synch, v_synch: STD_LOGIC;
 
-	component vga is
+component VGA is
 	Port(	clk: in  STD_LOGIC;
 			reset_n : in  STD_LOGIC;
 			h_sync : out  STD_LOGIC;
 			v_sync : out  STD_LOGIC; 
 			blank : out  STD_LOGIC;
+			lane1X : in unsigned(9 downto 0);
+            lane2X: in unsigned(9 downto 0);
+            lane3X: in unsigned(9 downto 0);
+            lane4X: in unsigned(9 downto 0);
+            frogX: in unsigned(9 downto 0);
+            frogY: in unsigned(9 downto 0);
+            river6X: in unsigned(9 downto 0);
+            river7X: in unsigned(9 downto 0);
+            river8X: in unsigned(9 downto 0);
+            frogType : in integer;
 			r: out STD_LOGIC_VECTOR(7 downto 0);
 			g: out STD_LOGIC_VECTOR(7 downto 0);
 			b: out STD_LOGIC_VECTOR(7 downto 0);
-			trigger_time: in unsigned(9 downto 0);
-			trigger_volt: in unsigned (9 downto 0);
 			row: out unsigned(9 downto 0);
-			column: out unsigned(9 downto 0);
-			ch1: in std_logic;
-			ch1_enb: in std_logic;
-			ch2: in std_logic;
-			ch2_enb: in std_logic);
-	end component;
+			column: out unsigned(9 downto 0));
+end component;
     --------------------------------------------------------------------------
     -- Clock Wizard Component Instantiation Using Xilinx Vivado 
     --------------------------------------------------------------------------
@@ -86,14 +92,18 @@ begin
 						r => red,
 						g => green,
 						b => blue,
-						trigger_volt => trigger_volt, 
-						trigger_time => trigger_time,
 						row => row,
 						column => column,
-						ch1				=> ch1,
-						ch1_enb			=> ch1_enb,
-						ch2				=> ch2,
-						ch2_enb			=> ch2_enb); 
+						lane1X => lane1X,
+						lane2X => lane2X,
+						lane3X => lane3X,
+						lane4X => lane4X,
+						river6X => river6X,
+						river7X => river7X,
+						river8X => river8X,
+						frogX => frogX,
+						frogY => frogY,
+						frogType => 0); 
 
 	------------------------------------------------------------------------------
 	-- This module was provided to us free of charge.  It converts a VGA signal
