@@ -41,10 +41,10 @@ Overall Behavior:
 
  
 2.3	Calculations/Analysis/Drawings
-![image](https://github.com/user-attachments/assets/1819cf87-41e8-4f98-91c2-c8bb673b1270)
 
  
 Figure Above: How I imagine Frogger to look after I create it.
+
 Figure Below: Screenshot of python code I used to create my ROM component.
  ![image](https://github.com/user-attachments/assets/21c65970-9860-485f-9403-aeac2536f97c)
 
