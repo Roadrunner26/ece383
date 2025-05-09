@@ -42,7 +42,8 @@ Overall Behavior:
  
 2.3	Calculations/Analysis/Drawings
 
- 
+ ![image](https://github.com/user-attachments/assets/ccc05a22-7db5-4a64-bbb8-4710c46e3b9f)
+
 Figure Above: How I imagine Frogger to look after I create it.
 
 Figure Below: Screenshot of python code I used to create my ROM component.
@@ -71,6 +72,7 @@ Due to time constraints, I was unable to meet my deliverable obligations for mil
 
 5 	Final Demonstration
 During the final demonstration, I was successfully able to draw cars and logs to the screen as well as move my frog through the UART terminal using keyboard commands.
+https://usafa0-my.sharepoint.com/personal/c26payton_nunn_afacademy_af_edu/_layouts/15/stream.aspx?id=%2Fpersonal%2Fc26payton%5Fnunn%5Fafacademy%5Faf%5Fedu%2FDocuments%2FDocuments%2FAcademics%2FSpring%202025%2FECE%20383%2Fgrant%5Fece38%5Fdemo%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E17c0d819%2D4efd%2D4087%2D8c9b%2Df3a7febdae8f
 
 6	Poster presentation
 I presented my poster to Lt. Col Trimble through a teams video screen recording and sent it to him on teams.
